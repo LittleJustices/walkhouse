@@ -69,3 +69,11 @@ class InputsScene extends Phaser.Scene {
         inputHandler.createKeys(this);
     }
 }
+
+class GUIScene extends Phaser.Scene {
+    constructor() {
+        super({ key: "gui-scene"} )
+    }
+
+    
+}
