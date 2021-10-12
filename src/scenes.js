@@ -10,13 +10,6 @@ class HouseScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("room-map", "../assets/room.json");
         this.load.image("player", "../assets/aq.png");
         this.load.image("reimu", "../assets/rm.png");
-    
-        this.load.scenePlugin(
-            'rexuiplugin', 
-            'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 
-            'rexUI', 
-            'rexUI');
-        this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
     }
 
     create() {
@@ -24,6 +17,7 @@ class HouseScene extends Phaser.Scene {
         this.map = new Map(backdropMap);
 
         this.scene.run("inputs-scene");
+        this.scene.run("gui-scene");
     
         const playerSprite = this.add.sprite(0, 0, "player");
         playerSprite.setDepth(2);
@@ -41,16 +35,6 @@ class HouseScene extends Phaser.Scene {
         this.map.addObject(reimu);
     
         this.gridPhysics = new GridPhysics([player, reimu], this.map);
-    
-        dialogueBox = createTextBox(this, CANVAS_WIDTH, CANVAS_HEIGHT, {
-            fixedHeight: 65,
-            outerWidth: CANVAS_WIDTH,
-            padding: TEXTBOX_OFFSET,
-        }).setScrollFactor(0);
-
-        eventCenter.on("end-dialogue", () => {
-            gameState.state = GameState.explorationState;
-        }, this);
     }
 
     update(_time, delta) {
@@ -75,5 +59,24 @@ class GUIScene extends Phaser.Scene {
         super({ key: "gui-scene"} )
     }
 
-    
+    preload() {
+        this.load.scenePlugin(
+            'rexuiplugin', 
+            'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 
+            'rexUI', 
+            'rexUI');
+        this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
+    }
+
+    create() {
+        dialogueBox = createTextBox(this, CANVAS_WIDTH, CANVAS_HEIGHT, {
+            fixedHeight: 65,
+            outerWidth: CANVAS_WIDTH,
+            padding: TEXTBOX_OFFSET,
+        }).setScrollFactor(0);
+
+        eventCenter.on("end-dialogue", () => {
+            gameState.state = GameState.explorationState;
+        }, this);
+    }
 }
