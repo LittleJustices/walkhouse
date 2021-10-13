@@ -47,8 +47,8 @@ class Entity {
 
     startInteraction() {
         gameState.state = GameState.interactionState;
-        let interactions = this.scene.cache.json.get(this.interactionKey);
-        displayDialogue(interactions.interactions.loremipsum.words);
+        let interactionsData = this.scene.cache.json.get(this.interactionKey);
+        InteractionsHandler.handleInteraction(interactionsData);
     }
 
     endInteraction() {

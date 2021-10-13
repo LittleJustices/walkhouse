@@ -21,5 +21,6 @@ var config = {
 var game = new Phaser.Game(config);
 const gameState = new GameState(GameState.explorationState);
 const inputHandler = new InputHandler(game.scene.getScene("inputs-scene"));
+// const interactionsHandler = new InteractionsHandler("../assets/interactions/");
 var player;
 var dialogueBox;
