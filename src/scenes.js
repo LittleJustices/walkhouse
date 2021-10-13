@@ -10,6 +10,8 @@ class HouseScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("room-map", "../assets/room.json");
         this.load.image("player", "../assets/aq.png");
         this.load.image("reimu", "../assets/rm.png");
+
+        this.load.json("rm-lines", "../assets/interactions/reimu.json");
     }
 
     create() {
@@ -25,13 +27,13 @@ class HouseScene extends Phaser.Scene {
         this.cameras.main.startFollow(playerSprite);
         this.cameras.main.roundPixels = true;
     
-        player = new Entity(playerSprite, new Phaser.Math.Vector2(11, 8), this, true);
+        player = new Entity(playerSprite, new Phaser.Math.Vector2(11, 8), this, true, "");
         this.map.addObject(player);
     
         const reimuSprite = this.add.sprite(0, 0, "reimu");
         reimuSprite.setDepth(2);
         reimuSprite.setScale(0.25);
-        const reimu = new Entity(reimuSprite, new Phaser.Math.Vector2(8, 8), this, false);
+        const reimu = new Entity(reimuSprite, new Phaser.Math.Vector2(8, 8), this, false, "rm-lines");
         this.map.addObject(reimu);
     
         this.gridPhysics = new GridPhysics([player, reimu], this.map);

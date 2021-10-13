@@ -1,9 +1,10 @@
 class Entity {
-    constructor(sprite, tilePos, scene, isPlayer) {
+    constructor(sprite, tilePos, scene, isPlayer, interactionKey) {
         this.sprite = sprite;
         this.tilePos = tilePos;
         this.scene = scene;
         this.isPlayer = isPlayer;
+        this.interactionKey = interactionKey
 
         const offsetX = TILE_SIZE / 2;
         const offsetY = TILE_SIZE;
@@ -46,7 +47,8 @@ class Entity {
 
     startInteraction() {
         gameState.state = GameState.interactionState;
-        displayDialogue("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ultrices, mi quis lobortis auctor, velit felis bibendum nisi, ut finibus sapien mauris ut eros. Phasellus aliquam venenatis ipsum, vel scelerisque tellus. Sed rutrum tortor mattis, euismod mauris vitae, porttitor velit. Maecenas rutrum ante ante, sed iaculis neque eleifend non. Aliquam erat volutpat. Proin leo eros, interdum ornare nunc ultricies, porttitor maximus nisi. Cras ut ipsum molestie, mattis augue a, cursus eros. In faucibus augue justo, vel iaculis tellus lobortis ac.");
+        let interactions = this.scene.cache.json.get(this.interactionKey);
+        displayDialogue(interactions.interactions.loremipsum.words);
     }
 
     endInteraction() {
