@@ -51,8 +51,6 @@ function createTextBox(scene, x, y, config) {
         // .setMinSize(outerWidth, outerHeight)
         .layout();
 
-        console.log(textBox);
-
     textBox
         .setInteractive()
         .on('pointerdown', function () {
