@@ -1,0 +1,5 @@
+class DialogueSelector {
+    constructor() {}
+
+    
+}
