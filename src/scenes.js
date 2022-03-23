@@ -26,7 +26,6 @@ class HouseScene extends Phaser.Scene {
         const backdropMap = this.make.tilemap({ key: "room-map" });
         this.map = new Map(backdropMap);
 
-        this.scene.run("inputs-scene");
         this.scene.run("gui-scene");
 
         // Array of actors. The player will always be at position 0
@@ -107,7 +106,10 @@ class HouseScene extends Phaser.Scene {
 
 class InputsScene extends Phaser.Scene {
     constructor() {
-        super({key: "inputs-scene"})
+        super({
+            key: "inputs-scene",
+            active: true
+        })
     }
 
     create() {
