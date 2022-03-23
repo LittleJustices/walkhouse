@@ -48,7 +48,7 @@ class Entity {
     startInteraction() {
         gameState.state = GameState.interactionState;
         let interactionsData = this.scene.cache.json.get(this.interactionKey);
-        InteractionsHandler.handleInteraction(interactionsData);
+        this.scene.interactionsHandler.handleInteraction(interactionsData);
     }
 
     endInteraction() {

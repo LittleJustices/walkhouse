@@ -15,6 +15,7 @@ class HouseScene extends Phaser.Scene {
     }
 
     create() {
+        this.interactionsHandler = new InteractionsHandler(this);
         const backdropMap = this.make.tilemap({ key: "room-map" });
         this.map = new Map(backdropMap);
 
