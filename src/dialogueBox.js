@@ -7,15 +7,16 @@ const ACTION_WIDTH = 36;
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 class DialogueBox {
-    constructor(scene, x, y, config) {
+    constructor(scene) {
         this.scene = scene;
-        this.x = x;
-        this.y = y;
-        this.config = config;
-        this.textBox = this.createTextBox(this.scene, this.x, this.y, this.config).setScrollFactor(0);
+        this.textBox = this.createTextBox(this.scene, {
+            fixedHeight: 65,
+            outerWidth: CANVAS_WIDTH,
+            padding: TEXTBOX_OFFSET,
+        }).setScrollFactor(0);
     }
     
-    createTextBox(scene, x, y, config) {
+    createTextBox(scene, config) {
         var fixedHeight = GetValue(config, 'fixedHeight', 0);
         var outerWidth = GetValue(config, 'outerWidth', 0);
         var outerHeight = GetValue(config, 'outerHeight', 0);
@@ -30,8 +31,8 @@ class DialogueBox {
         }
         var fixedWidth = outerWidth - 2 * padding - space.left - space.right - space.icon - space.text - ICON_WIDTH - ACTION_WIDTH;
         var textBox = scene.rexUI.add.textBox({
-                x: x,
-                y: y,
+                // x: x,
+                // y: y,
                 anchor: {
                     left: 'left+10',
                     right: 'right-10',

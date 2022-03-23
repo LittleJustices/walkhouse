@@ -130,11 +130,7 @@ class GUIScene extends Phaser.Scene {
     }
 
     create() {
-        dialogueBox = new DialogueBox(this, CANVAS_WIDTH, CANVAS_HEIGHT, {
-            fixedHeight: 65,
-            outerWidth: CANVAS_WIDTH,
-            padding: TEXTBOX_OFFSET,
-        });
+        dialogueBox = new DialogueBox(this);
 
         eventCenter.on("end-dialogue", () => {
             gameState.state = GameState.explorationState;
