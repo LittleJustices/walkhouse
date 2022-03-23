@@ -10,7 +10,7 @@ class InteractionsHandler {
         else interactionKeys = GetValue(interactionsData, "start", "error");
         this.currentInteraction = GetValue(interactionsData.interactions, interactionKeys, {words: "Error fetching dialogue data"});
         // logic to determine which interaction to choose goes here
-        displayDialogue(this.currentInteraction.words);
+        dialogueBox.displayDialogue(this.currentInteraction.words);
     }
 
     nextInteractionKeys() {
