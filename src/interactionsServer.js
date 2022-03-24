@@ -1,3 +1,8 @@
+const MSG_ERRORS = {
+    NOTINCACHE: "Data for this actor not found in cache",
+    NOFALLBACK: "No fallback interaction defined"
+}
+
 class InteractionsServer {
     constructor(jsonCache) {
         this.jsonCache = jsonCache;
@@ -8,7 +13,7 @@ class InteractionsServer {
         let interactionsSet = this.jsonCache.get(interactionKey);
         // If none found, return an error message object
         if (!interactionsSet) {
-            return this.interactionNotFound("NotInCache");
+            return this.interactionNotFound(MSG_ERRORS.NOTINCACHE);
         }
 
         // If found, get the array of interactions out of the set
@@ -21,14 +26,33 @@ class InteractionsServer {
     }
 
     interactionNotFound(errorCode) {
-        if (errorCode == "NotInCache") {
-            return {
-                words: "Er, what was I going to say...? Nevermind.\n(An error occurred fetching the dialogue data (data for this actor not found in cache). Please contact the developer.)"
-            }
+        return {
+            words: "Er, what was I going to say...? Nevermind.\n\n(An error occurred fetching the dialogue data: " + 
+                errorCode + 
+                ". Please contact the developer.)"
         }
     }
 
     findNextInteraction(interactionsTree) {
-        return interactionsTree[0];
+        // Loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
+        let nextInteraction = interactionsTree.find(interactionItem => {
+            return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions)
+        });
+        // If none are found, check if there's a fallback defined
+        if (!nextInteraction) {
+            let fallback = interactionsTree.fallback;
+            // If that's null, return an error, otherwise, return the fallback
+            if (!fallback) {
+                return this.interactionNotFound(MSG_ERRORS.NOFALLBACK);
+            } else {
+                return fallback;
+            }
+        } else {
+            return nextInteraction;
+        }
+    }
+
+    evaluateConditions(conditions) {
+        return true;
     }
 }
