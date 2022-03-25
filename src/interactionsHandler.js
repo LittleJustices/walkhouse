@@ -7,10 +7,10 @@ class InteractionsHandler {
 
     handleInteraction(interactionKey) {
         // Call into the server to provide the interaction to handle
-        let interactionData = this.server.fetchInteraction(interactionKey);
+        this.currentInteraction = this.server.fetchInteraction(interactionKey);
         // Handle anything that needs to be done before the interaction, e.g. event, setting name and portrait, etc.
         // Send the message to the dialogue box to be displayed
-        dialogueBox.displayDialogue(interactionData.words);
+        dialogueBox.displayDialogue(this.currentInteraction.words);
         // Handle anything that's supposed to happen after the interaction but before the next,
         // including determining whether the dialogue is over or a new interaction needs to be loaded
     }

@@ -34,6 +34,7 @@ class InteractionsServer {
     }
 
     findNextInteraction(interactionsTree) {
+        // An extra find goes here, to first look for an interaction which requires the most recent flag that has been set.
         // Loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
         let nextInteraction = interactionsTree.find(interactionItem => {
             return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions)
