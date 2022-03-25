@@ -19,12 +19,15 @@ class InteractionsHandler {
         // Handle anything that needs to be done before the interaction, e.g. event, setting name and portrait, etc.
         // Send the message to the dialogue box to be displayed
         dialogueBox.displayDialogue(this.currentInteraction.words);
-        // Handle anything that's supposed to happen after the interaction but before the next,
-        // including determining whether the dialogue is over or a new interaction needs to be loaded
     }
 
     // Called by the dialogue box when player presses forward on the last page of an interaction
     handleEndOfInteraction() {
+        // Handle anything that's supposed to happen after the interaction but before the next
+        // Set the interaction to already viewed, but don't bother if it doesn't have a value for that already
+        if (this.currentInteraction.alreadyViewed != null) {
+            this.currentInteraction.alreadyViewed = true;
+        }
         // Get the followups array out of the current interaction and pass them to the server to check if any should be displayed
         let followupInteraction = this.server.findFollowupInteraction(this.currentInteraction);
         if (!followupInteraction) {
