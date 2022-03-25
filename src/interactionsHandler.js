@@ -23,6 +23,13 @@ class InteractionsHandler {
         // including determining whether the dialogue is over or a new interaction needs to be loaded
     }
 
+    // Called by the dialogue box when player presses forward on the last page of an interaction
+    handleEndOfInteraction() {
+        // Get the followups array out of the current interaction and pass them to the server to check if any should be displayed
+        // If there are no legal followups, reset game to exploration state and clear the dialogue box
+        gameState.state = GameState.explorationState;
+    }
+
     // Everything below here is deprecated and to be deleted
     // Only keeping it around to reference logic and syntax maybe
     nextInteractionKeys() {

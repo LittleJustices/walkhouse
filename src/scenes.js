@@ -132,9 +132,5 @@ class GUIScene extends Phaser.Scene {
 
     create() {
         dialogueBox = new DialogueBox(this);
-
-        eventCenter.on("end-dialogue", () => {
-            gameState.state = GameState.explorationState;
-        }, this);
     }
 }
