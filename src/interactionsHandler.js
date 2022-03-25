@@ -1,5 +1,5 @@
 class InteractionsHandler {
-    constructor(scene) {
+    constructor() {
         this.currentInteraction = {};
         this.server = new InteractionsServer(game.cache.json);
     }
