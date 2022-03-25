@@ -1,8 +1,16 @@
 class InteractionsHandler {
     constructor(scene) {
         this.currentInteraction = {};
-        this.scene = scene;
-        this.server = new InteractionsServer(this.scene.cache.json);
+        this.server = new InteractionsServer(game.cache.json);
+    }
+
+    static _instance;
+
+    static instance() {
+        if (!this._instance) {
+            this._instance = new InteractionsHandler();
+        }
+        return this._instance;
     }
 
     handleInteraction(interactionKey) {
