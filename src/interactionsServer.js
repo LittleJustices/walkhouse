@@ -8,7 +8,7 @@ class InteractionsServer {
         this.jsonCache = jsonCache;
     }
 
-    fetchInteraction(interactionKey) {
+    fetchInteractionFromKey(interactionKey) {
         // Get the interaction set corresponding to the key from the cache
         let interactionsSet = this.jsonCache.get(interactionKey);
         // If none found, return an error message object
@@ -16,10 +16,8 @@ class InteractionsServer {
             return this.interactionNotFound(MSG_ERRORS.NOTINCACHE);
         }
 
-        // If found, get the array of interactions out of the set
-        let interactionsTree = interactionsSet.interactions;
-        // Loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
-        let nextInteraction = this.findNextInteraction(interactionsTree);
+        // If found, find the next interaction to be served
+        let nextInteraction = this.findNextInteraction(interactionsSet);
         // If none found, get the fallback "nothing more to say" interaction from the set
         // Return the interaction unit object
         return nextInteraction;
@@ -33,15 +31,12 @@ class InteractionsServer {
         }
     }
 
-    findNextInteraction(interactionsTree) {
-        // An extra find goes here, to first look for an interaction which requires the most recent flag that has been set.
-        // Loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
-        let nextInteraction = interactionsTree.find(interactionItem => {
-            return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions)
-        });
+    findNextInteraction(interactionsSet) {
+        // Get the first interaction that hasn't been shown and whose conditions are fulfilled
+        let nextInteraction = this.findFirstLegalInteraction(interactionsSet.interactions);
         // If none are found, check if there's a fallback defined
         if (!nextInteraction) {
-            let fallback = interactionsTree.fallback;
+            let fallback = interactionsSet.fallback;
             // If that's null, return an error, otherwise, return the fallback
             if (!fallback) {
                 return this.interactionNotFound(MSG_ERRORS.NOFALLBACK);
@@ -53,7 +48,24 @@ class InteractionsServer {
         }
     }
 
+    findFirstLegalInteraction(interactionsTree) {
+        // If the array is undefined or null, return null
+        if (!interactionsTree) {
+            return null;
+        }
+        // An extra find goes here, to first look for an interaction which requires the most recent flag that has been set.
+        // Loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
+        let nextInteraction = interactionsTree.find(interactionItem => {
+            return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions)
+        });
+        return nextInteraction;
+    }
+
     evaluateConditions(conditions) {
         return true;
+    }
+
+    findFollowupInteraction(starterInteraction){
+        return this.findFirstLegalInteraction(starterInteraction.followups)
     }
 }

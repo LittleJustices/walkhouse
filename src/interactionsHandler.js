@@ -15,7 +15,7 @@ class InteractionsHandler {
 
     handleInteraction(interactionKey) {
         // Call into the server to provide the interaction to handle
-        this.currentInteraction = this.server.fetchInteraction(interactionKey);
+        this.currentInteraction = this.server.fetchInteractionFromKey(interactionKey);
         // Handle anything that needs to be done before the interaction, e.g. event, setting name and portrait, etc.
         // Send the message to the dialogue box to be displayed
         dialogueBox.displayDialogue(this.currentInteraction.words);
@@ -26,8 +26,16 @@ class InteractionsHandler {
     // Called by the dialogue box when player presses forward on the last page of an interaction
     handleEndOfInteraction() {
         // Get the followups array out of the current interaction and pass them to the server to check if any should be displayed
-        // If there are no legal followups, reset game to exploration state and clear the dialogue box
-        gameState.state = GameState.explorationState;
+        let followupInteraction = this.server.findFollowupInteraction(this.currentInteraction);
+        if (!followupInteraction) {
+            // If there are no legal followups, clear the current interaction, reset game to exploration state, and clear the dialogue box
+            this.currentInteraction = {};
+            gameState.state = GameState.explorationState;
+        } else {
+            // If a followup is found, make that the current interaction and send it to the dialogue box to be displayed
+            this.currentInteraction = followupInteraction;
+            dialogueBox.displayDialogue(this.currentInteraction.words);
+        }
     }
 
     // Everything below here is deprecated and to be deleted
