@@ -35,6 +35,7 @@ class InteractionsServer {
         // Get the first interaction that hasn't been shown and whose conditions are fulfilled
         let nextInteraction = this.findFirstLegalInteraction(interactionsSet.interactions);
         // If none are found, check if there's a fallback defined
+        // Future change: If there are multiple fallbacks, pick one at random
         if (!nextInteraction) {
             let fallback = interactionsSet.fallback;
             // If that's null, return an error, otherwise, return the fallback
