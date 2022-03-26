@@ -2,27 +2,28 @@ class InputHandler {
     constructor() {}
 
     createKeys(inputsScene) {
+        const keyCodes = Phaser.Input.Keyboard.KeyCodes; // Alias for readability
         this.keys = inputsScene.input.keyboard.addKeys({
-            "numUp": Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT,
-            "numTopRight": Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE,
-            "numRight": Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX,
-            "numBottomRight": Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE,
-            "numDown": Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO,
-            "numBottomLeft": Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE,
-            "numLeft": Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR,
-            "numTopLeft": Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN,
-            "numZero": Phaser.Input.Keyboard.KeyCodes.NUMPAD_ZERO,
-            "enter": Phaser.Input.Keyboard.KeyCodes.ENTER,
-            "w": Phaser.Input.Keyboard.KeyCodes.W,
-            "a": Phaser.Input.Keyboard.KeyCodes.A,
-            "s": Phaser.Input.Keyboard.KeyCodes.S,
-            "d": Phaser.Input.Keyboard.KeyCodes.D,
-            "shift": Phaser.Input.Keyboard.KeyCodes.SHIFT,
-            "space": Phaser.Input.Keyboard.KeyCodes.SPACE,
-            "arrowUp": Phaser.Input.Keyboard.KeyCodes.UP,
-            "arrowRight": Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            "arrowDown": Phaser.Input.Keyboard.KeyCodes.DOWN,
-            "arrowLeft": Phaser.Input.Keyboard.KeyCodes.LEFT,
+            "numUp":            keyCodes.NUMPAD_EIGHT,
+            "numTopRight":      keyCodes.NUMPAD_NINE,
+            "numRight":         keyCodes.NUMPAD_SIX,
+            "numBottomRight":   keyCodes.NUMPAD_THREE,
+            "numDown":          keyCodes.NUMPAD_TWO,
+            "numBottomLeft":    keyCodes.NUMPAD_ONE,
+            "numLeft":          keyCodes.NUMPAD_FOUR,
+            "numTopLeft":       keyCodes.NUMPAD_SEVEN,
+            "numZero":          keyCodes.NUMPAD_ZERO,
+            "enter":            keyCodes.ENTER,
+            "w":                keyCodes.W,
+            "a":                keyCodes.A,
+            "s":                keyCodes.S,
+            "d":                keyCodes.D,
+            "shift":            keyCodes.SHIFT,
+            "space":            keyCodes.SPACE,
+            "arrowUp":          keyCodes.UP,
+            "arrowRight":       keyCodes.RIGHT,
+            "arrowDown":        keyCodes.DOWN,
+            "arrowLeft":        keyCodes.LEFT,
         });
     }
 

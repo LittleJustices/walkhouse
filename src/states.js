@@ -50,12 +50,12 @@ class InteractionState extends State {
     constructor() {
         super({
             wasdInputs: {
-                w: Commands.previousPageCommand(),
-                a: Commands.previousPageCommand(),
-                s: Commands.nextPageCommand(),
-                d: Commands.nextPageCommand(),
-                shift: Commands.nullCommand(),
-                space: Commands.nextPageCommand(),
+                w:      Commands.previousPageCommand(),
+                a:      Commands.previousPageCommand(),
+                s:      Commands.nextPageCommand(),
+                d:      Commands.nextPageCommand(),
+                shift:  Commands.nullCommand(),
+                space:  Commands.nextPageCommand(),
             },
             numpadInputs: {
                 numUp:          Commands.previousPageCommand(),
@@ -101,12 +101,12 @@ class MenuState extends State {
     constructor() {
         super({
             wasdInputs: {
-                w: Commands.nullCommand(),
-                a: Commands.nullCommand(),
-                s: Commands.nullCommand(),
-                d: Commands.nullCommand(),
-                shift: Commands.nullCommand(),
-                space: Commands.nullCommand(),
+                w:      Commands.nullCommand(),
+                a:      Commands.nullCommand(),
+                s:      Commands.nullCommand(),
+                d:      Commands.nullCommand(),
+                shift:  Commands.nullCommand(),
+                space:  Commands.nullCommand(),
             },
             numpadInputs: {
                 numUp:          Commands.nullCommand(),
@@ -138,12 +138,12 @@ class TitleState extends State {
     constructor() {
         super({
             wasdInputs: {
-                w: Commands.nullCommand(),
-                a: Commands.nullCommand(),
-                s: Commands.nullCommand(),
-                d: Commands.nullCommand(),
-                shift: Commands.nullCommand(),
-                space: Commands.nullCommand(),
+                w:      Commands.nullCommand(),
+                a:      Commands.nullCommand(),
+                s:      Commands.nullCommand(),
+                d:      Commands.nullCommand(),
+                shift:  Commands.nullCommand(),
+                space:  Commands.nullCommand(),
             },
             numpadInputs: {
                 numUp:          Commands.nullCommand(),

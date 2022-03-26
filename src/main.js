@@ -9,7 +9,8 @@ var config = {
     height: CANVAS_HEIGHT,
     scene: [
         new HouseScene("house"),
-        new InputsScene()
+        new InputsScene(),
+        new GUIScene()
     ]
     // loader: For later, when we start using real assets
     // plugin: Load plugins properly here
