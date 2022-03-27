@@ -1,3 +1,5 @@
+// Deprecated since every entity is interactable
+
 class Interactable extends Entity {
     constructor(sprite, tilePos, scene) {
         super(sprite, tilePos, false)
