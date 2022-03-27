@@ -1,3 +1,5 @@
+// Deprecated, InputServer does this
+
 class DialogueSelector {
     constructor() {}
 
