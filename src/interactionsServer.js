@@ -6,6 +6,7 @@ const MSG_ERRORS = {
 class InteractionsServer {
     constructor(jsonCache) {
         this.jsonCache = jsonCache;
+        this.flagTracker = new FlagTracker();
     }
 
     fetchInteractionFromKey(interactionKey) {
@@ -63,6 +64,18 @@ class InteractionsServer {
     }
 
     evaluateConditions(conditions) {
+        // If no conditions are defined, just return true
+        if (!conditions) {
+            return true;
+        }
+        // Loop through the arraz of conditions and check them against the flag tracker. If the array is empty it will skip this
+        for (let i = 0; i < conditions.length; i++) {
+            const flag = conditions[i];
+            if (!this.flagTracker.checkForFlag(flag)) {
+                // If any condition is not in the flags array, return false
+                return false
+            }
+        }
         return true;
     }
 
