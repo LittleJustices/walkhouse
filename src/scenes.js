@@ -10,15 +10,16 @@ class HouseScene extends Phaser.Scene {
         this.load.image("room-tiles", "../assets/tile.png");
         this.load.tilemapTiledJSON("room-map", "../assets/room.json");
 
-        // load sprite images
+        // Load player assets
         this.load.image(LoadInfo.playerKey + "-sprite", LoadInfo.spritesPath + LoadInfo.playerKey + ".png");
-        this.load.image(LoadInfo.houseActors[0] + "-sprite", LoadInfo.spritesPath + LoadInfo.houseActors[0] + ".png");
-
-        // load actor data
         this.load.json(LoadInfo.playerKey + "-data", LoadInfo.actorsPath + LoadInfo.playerKey + ".json");
-        this.load.json(LoadInfo.houseActors[0] + "-data", LoadInfo.actorsPath + LoadInfo.houseActors[0] + ".json");
 
-        this.load.json(LoadInfo.houseActors[0] + "-lines", LoadInfo.interactionsPath + LoadInfo.houseActors[0] + ".json");
+        // Load NPC assets
+        LoadInfo.houseActors.forEach(actorKey => {
+            this.load.image(actorKey + "-sprite", LoadInfo.spritesPath + actorKey + ".png");
+            this.load.json(actorKey + "-data", LoadInfo.actorsPath + actorKey + ".json");
+            this.load.json(actorKey + "-lines", LoadInfo.interactionsPath + actorKey + ".json");
+        });
     }
 
     create() {
@@ -80,23 +81,25 @@ class HouseScene extends Phaser.Scene {
         // Initialize array of non-player actors
         const npcs = [];
 
-        // Get an NPC's data. Later this will be a for loop
-        const actorData = this.cache.json.get(LoadInfo.houseActors[0] + "-data");
+        LoadInfo.houseActors.forEach(actorKey => {
+            // Get an NPC's data
+            const actorData = this.cache.json.get(actorKey + "-data");
 
-        // Make the sprite and set its properties
-        const actorSprite = this.add.sprite(0, 0, LoadInfo.houseActors[0] + "-sprite");
-        actorSprite.setDepth(actorData.spriteProperties.depth);
-        actorSprite.setScale(actorData.spriteProperties.scale);
+            // Make the sprite and set its properties
+            const actorSprite = this.add.sprite(0, 0, actorKey + "-sprite");
+            actorSprite.setDepth(actorData.spriteProperties.depth);
+            actorSprite.setScale(actorData.spriteProperties.scale);
 
-        // Create the NPC entity and add it to the NPC array
-        const actorEntity = new Entity(
-            actorSprite, 
-            new Phaser.Math.Vector2(actorData.entityProperties.initialX, actorData.entityProperties.initialY), 
-            this,   // Pass in this scene
-            false,  // isPlayer: NPCs are by definition never the player
-            LoadInfo.houseActors[0] + "-lines"
-        );
-        npcs.push(actorEntity);
+            // Create the NPC entity and add it to the NPC array
+            const actorEntity = new Entity(
+                actorSprite, 
+                new Phaser.Math.Vector2(actorData.entityProperties.initialX, actorData.entityProperties.initialY), 
+                this,   // Pass in this scene
+                false,  // isPlayer: NPCs are by definition never the player
+                actorKey + "-lines"
+            );
+            npcs.push(actorEntity);
+        })
 
         // Return the array of NPCs
         return npcs;
