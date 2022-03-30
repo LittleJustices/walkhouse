@@ -11,14 +11,14 @@ class HouseScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("room-map", "../assets/room.json");
 
         // load sprite images
-        this.load.image("player", "../assets/aq.png");
-        this.load.image("reimu", "../assets/rm.png");
+        this.load.image(LoadInfo.playerKey + "-sprite", LoadInfo.spritesPath + LoadInfo.playerKey + ".png");
+        this.load.image(LoadInfo.houseActors[0] + "-sprite", LoadInfo.spritesPath + LoadInfo.houseActors[0] + ".png");
 
         // load actor data
-        this.load.json("player-data", "../assets/actors/player.json");
-        this.load.json("rm-data", "../assets/actors/reimu.json");
+        this.load.json(LoadInfo.playerKey + "-data", LoadInfo.actorsPath + LoadInfo.playerKey + ".json");
+        this.load.json(LoadInfo.houseActors[0] + "-data", LoadInfo.actorsPath + LoadInfo.houseActors[0] + ".json");
 
-        this.load.json("rm-lines", "../assets/interactions/reimu.json");
+        this.load.json(LoadInfo.houseActors[0] + "-lines", LoadInfo.interactionsPath + LoadInfo.houseActors[0] + ".json");
     }
 
     create() {
@@ -55,10 +55,10 @@ class HouseScene extends Phaser.Scene {
 
     makePlayer() {
         // Get the data for the player
-        const playerData = this.cache.json.get("player-data");
+        const playerData = this.cache.json.get(LoadInfo.playerKey + "-data");
 
         // Make the sprite and set its properties
-        const playerSprite = this.add.sprite(0, 0, playerData.spriteKey);
+        const playerSprite = this.add.sprite(0, 0, LoadInfo.playerKey + "-sprite");
         playerSprite.setDepth(playerData.spriteProperties.depth);
         playerSprite.setScale(playerData.spriteProperties.scale);
 
@@ -81,10 +81,10 @@ class HouseScene extends Phaser.Scene {
         const npcs = [];
 
         // Get an NPC's data. Later this will be a for loop
-        const actorData = this.cache.json.get("rm-data");
+        const actorData = this.cache.json.get(LoadInfo.houseActors[0] + "-data");
 
         // Make the sprite and set its properties
-        const actorSprite = this.add.sprite(0, 0, actorData.spriteKey);
+        const actorSprite = this.add.sprite(0, 0, LoadInfo.houseActors[0] + "-sprite");
         actorSprite.setDepth(actorData.spriteProperties.depth);
         actorSprite.setScale(actorData.spriteProperties.scale);
 
@@ -94,7 +94,7 @@ class HouseScene extends Phaser.Scene {
             new Phaser.Math.Vector2(actorData.entityProperties.initialX, actorData.entityProperties.initialY), 
             this,   // Pass in this scene
             false,  // isPlayer: NPCs are by definition never the player
-            actorData.entityProperties.interactionKey
+            LoadInfo.houseActors[0] + "-lines"
         );
         npcs.push(actorEntity);
 
