@@ -1,5 +1,7 @@
 class Interaction {
-    constructor(interactionObject) {
+    constructor(pool, interactionObject) {
+        this.pool = pool;
+
         this.alreadyViewed = false;     // I suppose any interaction will always start unviewed so we don't need this in the json
 
         if (Array.isArray(interactionObject.conditions)) {
@@ -25,9 +27,13 @@ class Interaction {
         let followups = [];
 
         followupsArray.forEach(followupObject => {
-            followups.push(new Interaction(followupObject));
+            followups.push(new Interaction(this.pool, followupObject));
         });
 
         return followups;
+    }
+
+    findFollowupInteraction(){
+        return this.pool.findFirstLegalInteraction(this.followups)
     }
 }
