@@ -13,9 +13,9 @@ class InteractionsHandler {
         return this._instance;
     }
 
-    handleInteraction(interactionKey) {
+    handleInteraction(interactionPool) {
         // Call into the server to provide the interaction to handle
-        this.currentInteraction = this.server.fetchInteractionFromKey(interactionKey);
+        this.currentInteraction = this.server.findNextInteraction(interactionPool);
         // Handle anything that needs to be done before the interaction, e.g. event, setting name and portrait, etc.
         // Send the message to the dialogue box to be displayed
         dialogueBox.displayDialogue(this.currentInteraction.words);

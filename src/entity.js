@@ -1,11 +1,10 @@
 class Entity {
-    constructor(scene, sprite, entityData, interactionKey, interactionData) {
+    constructor(scene, sprite, entityData, interactionData) {
         // TODO: Create handling logic for missing or malformed information in the json data
         this.sprite = sprite;
         this.tilePos = new Phaser.Math.Vector2(entityData.initialPosition);
         this.scene = scene;
         this.isPlayer = entityData.isPlayer;
-        this.interactionKey = interactionKey;
         this.interactionPool = new InteractionPool(interactionData);
 
         const offsetX = TILE_SIZE / 2;
@@ -49,7 +48,7 @@ class Entity {
 
     startInteraction() {
         gameState.state = GameState.interactionState;   // Set game state to interaction
-        InteractionsHandler.instance().handleInteraction(this.interactionKey);
+        InteractionsHandler.instance().handleInteraction(this.interactionPool);
     }
 
     endInteraction() {
