@@ -16,6 +16,12 @@ class Interaction {
             this.words = "Placeholder error";   // TODO: Replace with proper error
         }
 
+        if (Array.isArray(interactionObject.flags)) {
+            this.flags = interactionObject.flags;
+        } else {
+            this.flags = [];
+        }
+
         this.followups = this.populateFollowups(interactionObject.followups);
     }
 
