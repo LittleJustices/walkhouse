@@ -1,9 +1,7 @@
 class FlagTracker {
-    constructor() {
-        this.flags = [];
-    }
+    static _flags = [];
 
     checkForFlag(flag) {
-        return this.flags.includes(flag);
+        return _flags.includes(flag);
     }
 }
