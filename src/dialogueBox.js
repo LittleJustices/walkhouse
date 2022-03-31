@@ -129,7 +129,7 @@ class DialogueBox {
             if (this.textBox.isLastPage) {
                 this.textBox.text = "";
                 // refer to function that decides what to do after a piece of dialogue is over (exit or pull up next piece)
-                InteractionsHandler.instance().handleEndOfInteraction();
+                InteractionsHandler.handleEndOfInteraction();
             } else {
                 this.textBox.typeNextPage();
             }

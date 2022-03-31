@@ -48,7 +48,7 @@ class Entity {
 
     startInteraction() {
         gameState.state = GameState.interactionState;   // Set game state to interaction
-        InteractionsHandler.instance().handleInteraction(this.interactionPool);
+        InteractionsHandler.handleInteraction(this.interactionPool);
     }
 
     endInteraction() {
