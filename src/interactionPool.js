@@ -23,11 +23,16 @@ class InteractionPool {
     }
 
     findFirstLegalInteraction(interactionsTree) {
-        // An extra find goes here, to first look for an interaction which requires the most recent flag that has been set.
-        // Loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
+        // First look for a legal interaction which requires the most recent flag that has been set.
         let nextInteraction = interactionsTree.find(interactionItem => {
-            return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions)
+            return !interactionItem.alreadyViewed && interactionItem.conditions.includes(FlagTracker.latestFlag());
         });
+        // If there isn't one, loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
+        if (!nextInteraction) {
+            nextInteraction = interactionsTree.find(interactionItem => {
+                return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions);
+            });
+        }
         return nextInteraction; // returns undefined if no interaction was found
     }
 
@@ -47,9 +52,10 @@ class InteractionPool {
         // Get the first interaction that hasn't been shown and whose conditions are fulfilled
         let nextInteraction = this.findFirstLegalInteraction(this.interactions);
         // If none are found, check if there's a fallback defined
-        // TODO: If there are multiple fallbacks, pick one at random
+        // If there are multiple fallbacks, pick one at random
+        let randomFallbackIndex = Phaser.Math.RND.integerInRange(0, this.fallbacks.length - 1);
         if (!nextInteraction) {
-            let fallback = this.fallbacks[0];
+            let fallback = this.fallbacks[randomFallbackIndex];
             // If that's null or undefined, return an error, otherwise, return the fallback
             if (!fallback) {
                 return this.interactionNotFound(MSG_ERRORS.NOFALLBACK);

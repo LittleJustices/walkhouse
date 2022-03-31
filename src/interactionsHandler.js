@@ -16,6 +16,11 @@ class InteractionsHandler {
         // Set the interaction to already viewed, but don't bother if it doesn't have a value for that already
         this._currentInteraction.alreadyViewed = true;
 
+        // Set any flags that the interaction contains
+        this._currentInteraction.flags.forEach(flagString => {
+            FlagTracker.addFlag(flagString);
+        });
+
         // Check if the current interaction has any followups to display
         let followupInteraction = this._currentInteraction.findFollowupInteraction();
         if (!followupInteraction) {
