@@ -1,9 +1,18 @@
 class Interaction {
     constructor(interactionObject) {
         this.alreadyViewed = false;     // I suppose any interaction will always start unviewed so we don't need this in the json
-        this.conditions = interactionObject.conditions;
 
-        this.words = interactionObject.words;
+        if (Array.isArray(interactionObject.conditions)) {
+            this.conditions = interactionObject.conditions;
+        } else {
+            this.conditions = [];   // If the conditions are undefined or null (or anything other than an array), treat as an empty array
+        }
+
+        if (typeof interactionObject.words == "string" && interactionObject.words != "") {
+            this.words = interactionObject.words;
+        } else {
+            this.words = "Placeholder error";   // TODO: Replace with proper error
+        }
 
         this.followups = this.populateFollowups(interactionObject.followups);
     }

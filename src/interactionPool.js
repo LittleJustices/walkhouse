@@ -4,7 +4,7 @@ class InteractionPool {
             return;
         }
         this.interactions = this.populateInteractions(interactionsData.interactions);
-        this.fallback = interactionsData.fallback;
+        this.fallbacks = this.populateInteractions(interactionsData.fallbacks);
     }
 
     populateInteractions(interactionsArray) {
