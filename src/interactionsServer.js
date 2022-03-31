@@ -45,7 +45,7 @@ class InteractionsServer {
     }
 
     evaluateConditions(conditions) {
-        // Loop through the arraz of conditions and check them against the flag tracker. If the array is empty it will skip this
+        // Loop through the array of conditions and check them against the flag tracker. If the array is empty it will skip this
         for (let i = 0; i < conditions.length; i++) {
             const flag = conditions[i];
             if (!this.flagTracker.checkForFlag(flag)) {
