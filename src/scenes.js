@@ -73,7 +73,7 @@ class HouseScene extends Phaser.Scene {
             playerSprite,
             playerData,
             "",      // interactionKey: The player never has an interaction key
-            {}
+            null
         );
     }
 
@@ -96,7 +96,7 @@ class HouseScene extends Phaser.Scene {
                 actorSprite, 
                 actorData,
                 actorKey + "-lines",
-                {}
+                this.cache.json.get(actorKey + "-lines")
             );
             npcs.push(actorEntity);
         })

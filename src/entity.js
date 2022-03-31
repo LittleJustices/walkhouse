@@ -6,6 +6,7 @@ class Entity {
         this.scene = scene;
         this.isPlayer = entityData.isPlayer;
         this.interactionKey = interactionKey;
+        this.interactionPool = new InteractionPool(interactionData);
 
         const offsetX = TILE_SIZE / 2;
         const offsetY = TILE_SIZE;
