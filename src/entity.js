@@ -1,9 +1,10 @@
 class Entity {
-    constructor(sprite, tilePos, scene, isPlayer, interactionKey) {
+    constructor(scene, sprite, entityData, interactionKey, interactionData) {
+        // TODO: Create handling logic for missing or malformed information in the json data
         this.sprite = sprite;
-        this.tilePos = tilePos;
+        this.tilePos = new Phaser.Math.Vector2(entityData.initialPosition);
         this.scene = scene;
-        this.isPlayer = isPlayer;
+        this.isPlayer = entityData.isPlayer;
         this.interactionKey = interactionKey
 
         const offsetX = TILE_SIZE / 2;
@@ -11,8 +12,8 @@ class Entity {
 
         this.sprite.setOrigin(0.5, 1);
         this.sprite.setPosition(
-            tilePos.x * TILE_SIZE + offsetX,
-            tilePos.y * TILE_SIZE + offsetY,
+            this.tilePos.x * TILE_SIZE + offsetX,
+            this.tilePos.y * TILE_SIZE + offsetY,
         )
 
         this.movementDirection = DIRECTION.NONE;

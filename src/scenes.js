@@ -68,12 +68,12 @@ class HouseScene extends Phaser.Scene {
         this.cameras.main.roundPixels = true;
 
         // Create the player entity and return it
-        return new Entity(
-            playerSprite, 
-            new Phaser.Math.Vector2(playerData.entityProperties.initialX, playerData.entityProperties.initialY), 
+        return new Entity( 
             this,   // Pass in this scene
-            true,   // isPlayer: This is always the player, so hardcoded
-            ""      // interactionKey: The player never has an interaction key
+            playerSprite,
+            playerData,
+            "",      // interactionKey: The player never has an interaction key
+            {}
         );
     }
 
@@ -91,12 +91,12 @@ class HouseScene extends Phaser.Scene {
             actorSprite.setScale(actorData.spriteProperties.scale);
 
             // Create the NPC entity and add it to the NPC array
-            const actorEntity = new Entity(
-                actorSprite, 
-                new Phaser.Math.Vector2(actorData.entityProperties.initialX, actorData.entityProperties.initialY), 
+            const actorEntity = new Entity( 
                 this,   // Pass in this scene
-                false,  // isPlayer: NPCs are by definition never the player
-                actorKey + "-lines"
+                actorSprite, 
+                actorData,
+                actorKey + "-lines",
+                {}
             );
             npcs.push(actorEntity);
         })
