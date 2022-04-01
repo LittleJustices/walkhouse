@@ -10,4 +10,6 @@ class LoadInfo {
     static houseActors = [
         "reimu"
     ];
+
+    static memoryActors = [];
 }
