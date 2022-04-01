@@ -38,8 +38,8 @@ class ExplorationState extends State {
         });
     }
 
-    update(command) {
-        let actor = player;
+    update(scene, command) {
+        let actor = scene.player;
         if (command) {
             command(actor);
         }
@@ -86,7 +86,7 @@ class InteractionState extends State {
     // However, both the player and NPCs need to be able to perform scripted movements
     // What NPCs are involved in a given interaction is probably contained in the interaction JSON data
 
-    update(command) {
+    update(scene, command) {
         let textBox = dialogueBox;
         if (command && !this.inputLastFrame) {
             command(textBox);

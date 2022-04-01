@@ -8,7 +8,8 @@ var config = {
     width: CANVAS_WIDTH,
     height: CANVAS_HEIGHT,
     scene: [
-        new HouseScene("house"),
+        new HouseScene({sceneTitle: "house", transitionTarget: "memory"}, LoadInfo.houseActors),
+        new HouseScene({sceneTitle: "memory", transitionTarget: "house"}, LoadInfo.memoryActors),
         new InputsScene(),
         new GUIScene()
     ]
@@ -21,5 +22,4 @@ var config = {
 var game = new Phaser.Game(config);
 const gameState = new GameState(GameState.explorationState);
 const inputHandler = new InputHandler();
-var player;
 var dialogueBox;

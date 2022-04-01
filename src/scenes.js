@@ -1,8 +1,10 @@
 class HouseScene extends Phaser.Scene {
-    constructor(sceneTitle) {
+    constructor(config, actorKeys) {
         super({
-            key: sceneTitle,
-        })
+            key: config.sceneTitle,
+        });
+        this.transitionTarget = config.transitionTarget;
+        this.actorKeys = actorKeys;
     }
 
     preload() {
@@ -15,7 +17,7 @@ class HouseScene extends Phaser.Scene {
         this.load.json(LoadInfo.playerKey + "-data", LoadInfo.actorsPath + LoadInfo.playerKey + ".json");
 
         // Load NPC assets
-        LoadInfo.houseActors.forEach(actorKey => {
+        this.actorKeys.forEach(actorKey => {
             this.load.image(actorKey + "-sprite", LoadInfo.spritesPath + actorKey + ".png");
             this.load.json(actorKey + "-data", LoadInfo.actorsPath + actorKey + ".json");
             this.load.json(actorKey + "-lines", LoadInfo.interactionsPath + actorKey + ".json");
@@ -32,8 +34,8 @@ class HouseScene extends Phaser.Scene {
         var actors = [];
 
         // Create player and add to actors
-        player = this.makePlayer();
-        actors.push(player);
+        this.player = this.makePlayer();
+        actors.push(this.player);
 
         // Create NPCs and add to actors (with concat because this is an array of npcs)
         const npcs = this.makeNPCs();
@@ -46,12 +48,20 @@ class HouseScene extends Phaser.Scene {
     
         // Add all actors to physics engine
         this.gridPhysics = new GridPhysics(actors, this.map);
+
+        // Stuff to do whenever this scene wakes up
+        this.events.on("wake", this.onWakeup);
     }
 
     update(_time, delta) {
         let command = inputHandler.handleInput();
-        gameState.state.update(command);
+        gameState.state.update(this, command);
         this.gridPhysics.update(delta);
+    }
+
+    onWakeup(system, data) {
+        console.log("wakey wakey!");
+        console.log(data);
     }
 
     makePlayer() {
@@ -80,7 +90,7 @@ class HouseScene extends Phaser.Scene {
         // Initialize array of non-player actors
         const npcs = [];
 
-        LoadInfo.houseActors.forEach(actorKey => {
+        this.actorKeys.forEach(actorKey => {
             // Get an NPC's data
             const actorData = this.cache.json.get(actorKey + "-data");
 
