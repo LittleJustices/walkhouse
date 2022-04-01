@@ -33,8 +33,8 @@ class HouseScene extends Phaser.Scene {
         var actors = [];
 
         // Create player and add to actors
-        player = this.makePlayer();
-        actors.push(player);
+        this.player = this.makePlayer();
+        actors.push(this.player);
 
         // Create NPCs and add to actors (with concat because this is an array of npcs)
         const npcs = this.makeNPCs();
@@ -51,7 +51,7 @@ class HouseScene extends Phaser.Scene {
 
     update(_time, delta) {
         let command = inputHandler.handleInput();
-        gameState.state.update(command);
+        gameState.state.update(this, command);
         this.gridPhysics.update(delta);
     }
 
