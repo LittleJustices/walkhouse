@@ -1,8 +1,9 @@
 class HouseScene extends Phaser.Scene {
-    constructor(sceneTitle, actorKeys) {
+    constructor(config, actorKeys) {
         super({
-            key: sceneTitle,
+            key: config.sceneTitle,
         });
+        this.transitionTarget = config.transitionTarget;
         this.actorKeys = actorKeys;
     }
 
