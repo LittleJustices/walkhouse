@@ -81,7 +81,7 @@ class HouseScene extends Phaser.Scene {
         // Initialize array of non-player actors
         const npcs = [];
 
-        LoadInfo.houseActors.forEach(actorKey => {
+        this.actorKeys.forEach(actorKey => {
             // Get an NPC's data
             const actorData = this.cache.json.get(actorKey + "-data");
 
