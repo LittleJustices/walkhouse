@@ -1,3 +1,5 @@
+// Deprecated, to be deleted in future commit
+
 class GridControls {
     constructor(input, gridPhysics) {
         this.input = input;

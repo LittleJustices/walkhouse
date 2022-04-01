@@ -1,52 +1,125 @@
 class HouseScene extends Phaser.Scene {
-    constructor(sceneTitle) {
+    constructor(config, actorKeys) {
         super({
-            key: sceneTitle,
-        })
+            key: config.sceneTitle,
+        });
+        this.transitionTarget = config.transitionTarget;
+        this.actorKeys = actorKeys;
     }
 
     preload() {
+        // load tileset and map
         this.load.image("room-tiles", "../assets/tile.png");
         this.load.tilemapTiledJSON("room-map", "../assets/room.json");
-        this.load.image("player", "../assets/aq.png");
-        this.load.image("reimu", "../assets/rm.png");
+
+        // Load player assets
+        this.load.image(LoadInfo.playerKey + "-sprite", LoadInfo.spritesPath + LoadInfo.playerKey + ".png");
+        this.load.json(LoadInfo.playerKey + "-data", LoadInfo.actorsPath + LoadInfo.playerKey + ".json");
+
+        // Load NPC assets
+        this.actorKeys.forEach(actorKey => {
+            this.load.image(actorKey + "-sprite", LoadInfo.spritesPath + actorKey + ".png");
+            this.load.json(actorKey + "-data", LoadInfo.actorsPath + actorKey + ".json");
+            this.load.json(actorKey + "-lines", LoadInfo.interactionsPath + actorKey + ".json");
+        });
     }
 
     create() {
         const backdropMap = this.make.tilemap({ key: "room-map" });
         this.map = new Map(backdropMap);
 
-        this.scene.run("inputs-scene");
         this.scene.run("gui-scene");
+
+        // Array of actors. The player will always be at position 0
+        var actors = [];
+
+        // Create player and add to actors
+        this.player = this.makePlayer();
+        actors.push(this.player);
+
+        // Create NPCs and add to actors (with concat because this is an array of npcs)
+        const npcs = this.makeNPCs();
+        actors = actors.concat(npcs);
+
+        // Add all actors to map
+        actors.forEach(actor => {
+            this.map.addObject(actor);
+        });
     
-        const playerSprite = this.add.sprite(0, 0, "player");
-        playerSprite.setDepth(2);
-        playerSprite.setScale(0.25);
-        this.cameras.main.startFollow(playerSprite);
-        this.cameras.main.roundPixels = true;
-    
-        player = new Entity(playerSprite, new Phaser.Math.Vector2(11, 8), this, true);
-        this.map.addObject(player);
-    
-        const reimuSprite = this.add.sprite(0, 0, "reimu");
-        reimuSprite.setDepth(2);
-        reimuSprite.setScale(0.25);
-        const reimu = new Entity(reimuSprite, new Phaser.Math.Vector2(8, 8), this, false);
-        this.map.addObject(reimu);
-    
-        this.gridPhysics = new GridPhysics([player, reimu], this.map);
+        // Add all actors to physics engine
+        this.gridPhysics = new GridPhysics(actors, this.map);
+
+        // Stuff to do whenever this scene wakes up
+        this.events.on("wake", this.onWakeup);
     }
 
     update(_time, delta) {
         let command = inputHandler.handleInput();
-        gameState.state.update(command);
+        gameState.state.update(this, command);
         this.gridPhysics.update(delta);
+    }
+
+    onWakeup(system, data) {
+        console.log("wakey wakey!");
+        console.log(data);
+    }
+
+    makePlayer() {
+        // Get the data for the player
+        const playerData = this.cache.json.get(LoadInfo.playerKey + "-data");
+
+        // Make the sprite and set its properties
+        const playerSprite = this.add.sprite(0, 0, LoadInfo.playerKey + "-sprite");
+        playerSprite.setDepth(playerData.spriteProperties.depth);
+        playerSprite.setScale(playerData.spriteProperties.scale);
+
+        // Make the camera follow the player
+        this.cameras.main.startFollow(playerSprite);
+        this.cameras.main.roundPixels = true;
+
+        // Create the player entity and return it
+        return new Entity( 
+            this,   // Pass in this scene
+            playerSprite,
+            playerData,
+            null
+        );
+    }
+
+    makeNPCs() {
+        // Initialize array of non-player actors
+        const npcs = [];
+
+        this.actorKeys.forEach(actorKey => {
+            // Get an NPC's data
+            const actorData = this.cache.json.get(actorKey + "-data");
+
+            // Make the sprite and set its properties
+            const actorSprite = this.add.sprite(0, 0, actorKey + "-sprite");
+            actorSprite.setDepth(actorData.spriteProperties.depth);
+            actorSprite.setScale(actorData.spriteProperties.scale);
+
+            // Create the NPC entity and add it to the NPC array
+            const actorEntity = new Entity( 
+                this,   // Pass in this scene
+                actorSprite, 
+                actorData,
+                this.cache.json.get(actorKey + "-lines")
+            );
+            npcs.push(actorEntity);
+        })
+
+        // Return the array of NPCs
+        return npcs;
     }
 }
 
 class InputsScene extends Phaser.Scene {
     constructor() {
-        super({key: "inputs-scene"})
+        super({
+            key: "inputs-scene",
+            active: true
+        })
     }
 
     create() {
@@ -69,14 +142,6 @@ class GUIScene extends Phaser.Scene {
     }
 
     create() {
-        dialogueBox = createTextBox(this, CANVAS_WIDTH, CANVAS_HEIGHT, {
-            fixedHeight: 65,
-            outerWidth: CANVAS_WIDTH,
-            padding: TEXTBOX_OFFSET,
-        }).setScrollFactor(0);
-
-        eventCenter.on("end-dialogue", () => {
-            gameState.state = GameState.explorationState;
-        }, this);
+        dialogueBox = new DialogueBox(this);
     }
 }
