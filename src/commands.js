@@ -2,8 +2,12 @@ class Commands {
     constructor() {}
 
     static toggleMemoryCommand() {
-        return function() {
-            console.log("enter the akyuuverse");
+        return function(player) {
+            player.scene.scene.transition({
+                target: player.scene.transitionTarget,
+                sleep: true,
+                data: "this is the data passed into the wakeup event"
+            });
         }
     }
 
