@@ -8,7 +8,7 @@ var config = {
     width: CANVAS_WIDTH,
     height: CANVAS_HEIGHT,
     scene: [
-        new HouseScene("house"),
+        new HouseScene("house", LoadInfo.houseActors),
         new InputsScene(),
         new GUIScene()
     ]

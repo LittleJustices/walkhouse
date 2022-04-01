@@ -1,8 +1,9 @@
 class HouseScene extends Phaser.Scene {
-    constructor(sceneTitle) {
+    constructor(sceneTitle, actorKeys) {
         super({
             key: sceneTitle,
-        })
+        });
+        this.actorKeys = actorKeys;
     }
 
     preload() {
@@ -15,7 +16,7 @@ class HouseScene extends Phaser.Scene {
         this.load.json(LoadInfo.playerKey + "-data", LoadInfo.actorsPath + LoadInfo.playerKey + ".json");
 
         // Load NPC assets
-        LoadInfo.houseActors.forEach(actorKey => {
+        this.actorKeys.forEach(actorKey => {
             this.load.image(actorKey + "-sprite", LoadInfo.spritesPath + actorKey + ".png");
             this.load.json(actorKey + "-data", LoadInfo.actorsPath + actorKey + ".json");
             this.load.json(actorKey + "-lines", LoadInfo.interactionsPath + actorKey + ".json");
