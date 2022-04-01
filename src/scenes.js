@@ -48,12 +48,20 @@ class HouseScene extends Phaser.Scene {
     
         // Add all actors to physics engine
         this.gridPhysics = new GridPhysics(actors, this.map);
+
+        // Stuff to do whenever this scene wakes up
+        this.events.on("wake", this.onWakeup);
     }
 
     update(_time, delta) {
         let command = inputHandler.handleInput();
         gameState.state.update(this, command);
         this.gridPhysics.update(delta);
+    }
+
+    onWakeup(system, data) {
+        console.log("wakey wakey!");
+        console.log(data);
     }
 
     makePlayer() {
