@@ -11,5 +11,7 @@ class LoadInfo {
         "reimu"
     ];
 
-    static memoryActors = [];
+    static memoryActors = [
+        "reimemory"
+    ];
 }
