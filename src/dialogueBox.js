@@ -4,8 +4,6 @@ const COLOR_DARK = 0x260e04;
 const ICON_WIDTH = 32;      // Hardcoded for now, figure out how to get the width dynamically once I start playing with real assets
 const ACTION_WIDTH = 36;
 
-const GetValue = Phaser.Utils.Objects.GetValue;
-
 class DialogueBox {
     constructor(scene) {
         this.scene = scene;

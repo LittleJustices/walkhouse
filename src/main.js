@@ -3,6 +3,8 @@ const CANVAS_HEIGHT = 600; // 528;
 const TEXTBOX_OFFSET = 10;
 const TILE_SIZE = 16;
 
+const GetValue = Phaser.Utils.Objects.GetValue;
+
 var config = {
     type: Phaser.AUTO,
     width: CANVAS_WIDTH,
