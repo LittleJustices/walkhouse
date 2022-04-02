@@ -12,6 +12,14 @@ class Interaction {
             this.conditions = [];   // If the conditions are undefined or null (or anything other than an array or a string), treat as an empty array
         }
 
+        if (Array.isArray(interactionObject.unconditions)) {
+            this.unconditions = interactionObject.unconditions;
+        } else if (typeof interactionObject.unconditions == "string") {
+            this.unconditions = [interactionObject.unconditions];   // If the conditions are a single string (forgot the brackets), make an array
+        } else {
+            this.unconditions = [];   // If the conditions are undefined or null (or anything other than an array or a string), treat as an empty array
+        }
+
         if (typeof interactionObject.words == "string" && interactionObject.words != "") {
             this.words = interactionObject.words;
         } else {
