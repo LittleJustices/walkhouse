@@ -6,8 +6,10 @@ class Interaction {
 
         if (Array.isArray(interactionObject.conditions)) {
             this.conditions = interactionObject.conditions;
+        } else if (typeof interactionObject.conditions == "string") {
+            this.conditions = [interactionObject.conditions];   // If the conditions are a single string (forgot the brackets), make an array
         } else {
-            this.conditions = [];   // If the conditions are undefined or null (or anything other than an array), treat as an empty array
+            this.conditions = [];   // If the conditions are undefined or null (or anything other than an array or a string), treat as an empty array
         }
 
         if (typeof interactionObject.words == "string" && interactionObject.words != "") {
@@ -18,6 +20,8 @@ class Interaction {
 
         if (Array.isArray(interactionObject.flags)) {
             this.flags = interactionObject.flags;
+        } else if (typeof interactionObject.flags == "string") {
+            this.flags = [interactionObject.flags];
         } else {
             this.flags = [];
         }
