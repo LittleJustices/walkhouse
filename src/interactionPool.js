@@ -30,13 +30,13 @@ class InteractionPool {
         // If there isn't one, loop through the array to find the first one that hasn't been shown and whose conditions are fulfilled
         if (!nextInteraction) {
             nextInteraction = interactionsTree.find(interactionItem => {
-                return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions);
+                return !interactionItem.alreadyViewed && this.evaluateConditions(interactionItem.conditions, interactionItem.unconditions);
             });
         }
         return nextInteraction; // returns undefined if no interaction was found
     }
 
-    evaluateConditions(conditions) {
+    evaluateConditions(conditions, unconditions) {
         // Loop through the array of conditions and check them against the flag tracker. If the array is empty it will skip this
         for (let i = 0; i < conditions.length; i++) {
             const flag = conditions[i];
@@ -45,6 +45,16 @@ class InteractionPool {
                 return false
             }
         }
+        
+        // Do the same for the unconditions array
+        for (let i = 0; i < unconditions.length; i++) {
+            const flag = unconditions[i];
+            if (FlagTracker.checkForFlag(flag)) {
+                // If any UNcondition IS in the flags array, return false
+                return false
+            }
+        }
+
         return true;
     }
 
