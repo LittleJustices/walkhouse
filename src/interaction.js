@@ -20,10 +20,10 @@ class Interaction {
             this.unconditions = [];   // If the conditions are undefined or null (or anything other than an array or a string), treat as an empty array
         }
 
-        if (typeof interactionObject.words == "string" && interactionObject.words != "") {
+        if (typeof interactionObject.words == "string") {
             this.words = interactionObject.words;
         } else {
-            this.words = "Placeholder error";   // TODO: Replace with proper error
+            this.words = "";   // TODO: Replace with proper error
         }
 
         if (Array.isArray(interactionObject.flags)) {

@@ -1,6 +1,7 @@
 const MSG_ERRORS = {
     NOTINCACHE: "Data for this actor not found in cache",
-    NOFALLBACK: "No fallback interaction defined"
+    NOFALLBACK: "No fallback interaction defined",
+    NOWORDS: "Interaction text not defined"
 }
 
 class InteractionPool {
@@ -63,18 +64,20 @@ class InteractionPool {
         let nextInteraction = this.findFirstLegalInteraction(this.interactions);
         // If none are found, check if there's a fallback defined
         if (!nextInteraction) {
-        // If there are multiple fallbacks, pick one at random
-        let randomFallbackIndex = Phaser.Math.RND.integerInRange(0, this.fallbacks.length - 1);
+            // If there are multiple fallbacks, pick one at random
+            let randomFallbackIndex = Phaser.Math.RND.integerInRange(0, this.fallbacks.length - 1);
             let fallback = this.fallbacks[randomFallbackIndex];
             // If that's null or undefined, return an error, otherwise, return the fallback
             if (!fallback) {
                 return this.interactionNotFound(MSG_ERRORS.NOFALLBACK);
             } else {
-                return fallback;
+                nextInteraction = fallback;
             }
-        } else {
-            return nextInteraction;
         }
+        if (nextInteraction.words == "") {
+            return this.interactionNotFound(MSG_ERRORS.NOWORDS);
+        }
+        return nextInteraction;
     }
 
     interactionNotFound(errorCode) {
