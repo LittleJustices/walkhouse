@@ -7,7 +7,10 @@ const MSG_ERRORS = {
 class InteractionPool {
     constructor(interactionsData) {
         if (!interactionsData) {
-            return;
+            // For null or undefined data, make a fallback with an error message
+            interactionsData = {
+                fallbacks: this.interactionNotFound(MSG_ERRORS.NOTINCACHE)
+            };
         }
         this.interactions = this.populateInteractions(interactionsData.interactions);
         this.fallbacks = this.populateInteractions(interactionsData.fallbacks);
@@ -16,11 +19,16 @@ class InteractionPool {
     populateInteractions(interactionsArray) {
         // TODO: check if the interactions array exists and return an error if not
         let interactions = [];
-        // loop through the interactions array and create an interaction object for each interaction recursively
-        interactionsArray.forEach(interactionObject => {
-            interactions.push(new Interaction(this, interactionObject));
-        });
-        return interactions;
+        if (Array.isArray(interactionsArray)) {
+            // loop through the interactions array and create an interaction object for each interaction recursively
+            interactionsArray.forEach(interactionObject => {
+                interactions.push(new Interaction(this, interactionObject));
+            });
+        } else if (interactionsArray) {
+            // If not an array but not null or undefined, push a single interaction
+            interactions.push(new Interaction(this, interactionsArray));
+        }
+        return interactions;    // If the array was null or undefined this will return an empty array
     }
 
     findFirstLegalInteraction(interactionsTree) {

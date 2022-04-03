@@ -5,7 +5,7 @@ class Interaction {
         this.alreadyViewed = false;     // I suppose any interaction will always start unviewed so we don't need this in the json
 
         if (!interactionObject) {
-            interactionObject = {};
+            interactionObject = {};     // Treat null or undefined data as empty
         }
 
         if (Array.isArray(interactionObject.conditions)) {
