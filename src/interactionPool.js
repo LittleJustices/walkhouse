@@ -1,12 +1,16 @@
 const MSG_ERRORS = {
     NOTINCACHE: "Data for this actor not found in cache",
-    NOFALLBACK: "No fallback interaction defined"
+    NOFALLBACK: "No fallback interaction defined",
+    NOWORDS: "Interaction text not defined"
 }
 
 class InteractionPool {
     constructor(interactionsData) {
         if (!interactionsData) {
-            return;
+            // For null or undefined data, make a fallback with an error message
+            interactionsData = {
+                fallbacks: this.interactionNotFound(MSG_ERRORS.NOTINCACHE)
+            };
         }
         this.interactions = this.populateInteractions(interactionsData.interactions);
         this.fallbacks = this.populateInteractions(interactionsData.fallbacks);
@@ -15,11 +19,16 @@ class InteractionPool {
     populateInteractions(interactionsArray) {
         // TODO: check if the interactions array exists and return an error if not
         let interactions = [];
-        // loop through the interactions array and create an interaction object for each interaction recursively
-        interactionsArray.forEach(interactionObject => {
-            interactions.push(new Interaction(this, interactionObject));
-        });
-        return interactions;
+        if (Array.isArray(interactionsArray)) {
+            // loop through the interactions array and create an interaction object for each interaction recursively
+            interactionsArray.forEach(interactionObject => {
+                interactions.push(new Interaction(this, interactionObject));
+            });
+        } else if (interactionsArray) {
+            // If not an array but not null or undefined, push a single interaction
+            interactions.push(new Interaction(this, interactionsArray));
+        }
+        return interactions;    // If the array was null or undefined this will return an empty array
     }
 
     findFirstLegalInteraction(interactionsTree) {
@@ -62,19 +71,21 @@ class InteractionPool {
         // Get the first interaction that hasn't been shown and whose conditions are fulfilled
         let nextInteraction = this.findFirstLegalInteraction(this.interactions);
         // If none are found, check if there's a fallback defined
-        // If there are multiple fallbacks, pick one at random
-        let randomFallbackIndex = Phaser.Math.RND.integerInRange(0, this.fallbacks.length - 1);
         if (!nextInteraction) {
+            // If there are multiple fallbacks, pick one at random
+            let randomFallbackIndex = Phaser.Math.RND.integerInRange(0, this.fallbacks.length - 1);
             let fallback = this.fallbacks[randomFallbackIndex];
             // If that's null or undefined, return an error, otherwise, return the fallback
             if (!fallback) {
                 return this.interactionNotFound(MSG_ERRORS.NOFALLBACK);
             } else {
-                return fallback;
+                nextInteraction = fallback;
             }
-        } else {
-            return nextInteraction;
         }
+        if (nextInteraction.words == "") {
+            return this.interactionNotFound(MSG_ERRORS.NOWORDS);
+        }
+        return nextInteraction;
     }
 
     interactionNotFound(errorCode) {

@@ -4,6 +4,10 @@ class Interaction {
 
         this.alreadyViewed = false;     // I suppose any interaction will always start unviewed so we don't need this in the json
 
+        if (!interactionObject) {
+            interactionObject = {};     // Treat null or undefined data as empty
+        }
+
         if (Array.isArray(interactionObject.conditions)) {
             this.conditions = interactionObject.conditions;
         } else if (typeof interactionObject.conditions == "string") {
@@ -20,10 +24,10 @@ class Interaction {
             this.unconditions = [];   // If the conditions are undefined or null (or anything other than an array or a string), treat as an empty array
         }
 
-        if (typeof interactionObject.words == "string" && interactionObject.words != "") {
+        if (typeof interactionObject.words == "string") {
             this.words = interactionObject.words;
         } else {
-            this.words = "Placeholder error";   // TODO: Replace with proper error
+            this.words = "";
         }
 
         if (Array.isArray(interactionObject.flags)) {
