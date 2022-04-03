@@ -4,6 +4,10 @@ class Interaction {
 
         this.alreadyViewed = false;     // I suppose any interaction will always start unviewed so we don't need this in the json
 
+        if (!interactionObject) {
+            interactionObject = {};
+        }
+
         if (Array.isArray(interactionObject.conditions)) {
             this.conditions = interactionObject.conditions;
         } else if (typeof interactionObject.conditions == "string") {
@@ -23,7 +27,7 @@ class Interaction {
         if (typeof interactionObject.words == "string") {
             this.words = interactionObject.words;
         } else {
-            this.words = "";   // TODO: Replace with proper error
+            this.words = "";
         }
 
         if (Array.isArray(interactionObject.flags)) {
