@@ -145,3 +145,16 @@ class GUIScene extends Phaser.Scene {
         dialogueBox = new DialogueBox(this);
     }
 }
+
+class LoadScene extends Phaser.Scene {
+    constructor() {
+        super({
+            key: "loading-scene",
+            active: true
+        })
+    }
+
+    preload() {
+
+    }
+}
