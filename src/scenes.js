@@ -13,14 +13,14 @@ class HouseScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("room-map", "../assets/room.json");
 
         // Load player assets
-        this.load.image(LoadInfo.playerKey + "-sprite", LoadInfo.spritesPath + LoadInfo.playerKey + ".png");
-        this.load.json(LoadInfo.playerKey + "-data", LoadInfo.actorsPath + LoadInfo.playerKey + ".json");
+        this.load.image(PLAYER_KEY + "-sprite", SPRITES_PATH + PLAYER_KEY + ".png");
+        this.load.json(PLAYER_KEY + "-data", ACTORS_PATH + PLAYER_KEY + ".json");
 
         // Load NPC assets
         this.actorKeys.forEach(actorKey => {
-            this.load.image(actorKey + "-sprite", LoadInfo.spritesPath + actorKey + ".png");
-            this.load.json(actorKey + "-data", LoadInfo.actorsPath + actorKey + ".json");
-            this.load.json(actorKey + "-lines", LoadInfo.interactionsPath + actorKey + ".json");
+            this.load.image(actorKey + "-sprite", SPRITES_PATH + actorKey + ".png");
+            this.load.json(actorKey + "-data", ACTORS_PATH + actorKey + ".json");
+            this.load.json(actorKey + "-lines", INTERACTIONS_PATH + actorKey + ".json");
         });
     }
 
@@ -66,10 +66,10 @@ class HouseScene extends Phaser.Scene {
 
     makePlayer() {
         // Get the data for the player
-        const playerData = this.cache.json.get(LoadInfo.playerKey + "-data");
+        const playerData = this.cache.json.get(PLAYER_KEY + "-data");
 
         // Make the sprite and set its properties
-        const playerSprite = this.add.sprite(0, 0, LoadInfo.playerKey + "-sprite");
+        const playerSprite = this.add.sprite(0, 0, PLAYER_KEY + "-sprite");
         playerSprite.setDepth(playerData.spriteProperties.depth);
         playerSprite.setScale(playerData.spriteProperties.scale);
 
