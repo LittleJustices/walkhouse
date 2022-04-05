@@ -1,28 +1,13 @@
 class HouseScene extends Phaser.Scene {
-    constructor(config, actorKeys) {
+    constructor(config) {
         super({
             key: config.sceneTitle,
         });
         this.transitionTarget = config.transitionTarget;
-        this.actorKeys = actorKeys;
+        this.actorKeys = config.actorKeys;
     }
 
-    preload() {
-        // load tileset and map
-        this.load.image("room-tiles", "../assets/tile.png");
-        this.load.tilemapTiledJSON("room-map", "../assets/room.json");
-
-        // Load player assets
-        this.load.image(LoadInfo.playerKey + "-sprite", LoadInfo.spritesPath + LoadInfo.playerKey + ".png");
-        this.load.json(LoadInfo.playerKey + "-data", LoadInfo.actorsPath + LoadInfo.playerKey + ".json");
-
-        // Load NPC assets
-        this.actorKeys.forEach(actorKey => {
-            this.load.image(actorKey + "-sprite", LoadInfo.spritesPath + actorKey + ".png");
-            this.load.json(actorKey + "-data", LoadInfo.actorsPath + actorKey + ".json");
-            this.load.json(actorKey + "-lines", LoadInfo.interactionsPath + actorKey + ".json");
-        });
-    }
+    preload() {    }
 
     create() {
         const backdropMap = this.make.tilemap({ key: "room-map" });
@@ -66,10 +51,10 @@ class HouseScene extends Phaser.Scene {
 
     makePlayer() {
         // Get the data for the player
-        const playerData = this.cache.json.get(LoadInfo.playerKey + "-data");
+        const playerData = this.cache.json.get(PLAYER_KEY + "-data");
 
         // Make the sprite and set its properties
-        const playerSprite = this.add.sprite(0, 0, LoadInfo.playerKey + "-sprite");
+        const playerSprite = this.add.sprite(0, 0, PLAYER_KEY + "-sprite");
         playerSprite.setDepth(playerData.spriteProperties.depth);
         playerSprite.setScale(playerData.spriteProperties.scale);
 
@@ -138,10 +123,99 @@ class GUIScene extends Phaser.Scene {
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 
             'rexUI', 
             'rexUI');
-        this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-    }
+        }
 
     create() {
         dialogueBox = new DialogueBox(this);
+    }
+}
+
+class LoadScene extends Phaser.Scene {
+    constructor() {
+        super({
+            key: "loading-scene",
+            active: true
+        })
+    }
+
+    preload() {
+        // Create progress bar
+        var progressBar = this.add.graphics();
+        var progressBox = this.add.graphics();
+        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillRect(240, 270, 320, 50);
+
+        // Create loading text
+        var width = this.cameras.main.width;
+        var height = this.cameras.main.height;
+        var loadingText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 50,
+            text: "Girls are remembering...",
+            style: {
+                font: '20px monospace',
+                fill: '#ffffff'
+            }
+        })
+        loadingText.setOrigin(0.5, 0.5);
+        var percentText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 5,
+            text: "0%",
+            style: {
+                font: '18px monospace',
+                fill: '#ffffff'
+            }
+        })
+        percentText.setOrigin(0.5, 0.5);
+
+        this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
+    
+        // load tileset and map
+        this.load.image("room-tiles", "../assets/tile.png");
+        this.load.tilemapTiledJSON("room-map", "../assets/room.json");
+
+        // Load player assets
+        this.load.image(PLAYER_KEY + "-sprite", SPRITES_PATH + PLAYER_KEY + ".png");
+        this.load.json(PLAYER_KEY + "-data", ACTORS_PATH + PLAYER_KEY + ".json");
+
+        // Load NPC assets
+        HOUSE_ACTORS.forEach(actorKey => {
+            this.load.image(actorKey + "-sprite", SPRITES_PATH + actorKey + ".png");
+            this.load.json(actorKey + "-data", ACTORS_PATH + actorKey + ".json");
+            this.load.json(actorKey + "-lines", INTERACTIONS_PATH + actorKey + ".json");
+        });
+
+        // Load memory assets
+        MEMORY_ACTORS.forEach(actorKey => {
+            this.load.image(actorKey + "-sprite", SPRITES_PATH + actorKey + ".png");
+            this.load.json(actorKey + "-data", ACTORS_PATH + actorKey + ".json");
+            this.load.json(actorKey + "-lines", INTERACTIONS_PATH + actorKey + ".json");
+        });
+
+        this.load.on('progress', function (value) {
+            console.log(value);
+            progressBar.clear();
+            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillRect(250, 280, 300 * value, 30);
+            percentText.setText(parseInt(value * 100) + "%");
+        });
+                    
+        this.load.on('fileprogress', function (file) {
+            console.log(file.src);
+        });
+        this.load.on('complete', function () {
+            progressBar.destroy();
+            progressBox.destroy();
+            loadingText.destroy();
+            percentText.destroy();
+            console.log('complete');
+        });
+    }
+
+    create() {
+        this.scene.transition({
+            target: "house"
+        })
     }
 }

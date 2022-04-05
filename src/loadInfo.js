@@ -1,17 +1,15 @@
-class LoadInfo {
-    static actorsPath = "../assets/actors/";
+const ACTORS_PATH = "../assets/actors/";
 
-    static interactionsPath = "../assets/interactions/";
+const INTERACTIONS_PATH = "../assets/interactions/";
 
-    static spritesPath = "../assets/sprites/";
+const SPRITES_PATH = "../assets/sprites/";
 
-    static playerKey = "akyuu";
+const PLAYER_KEY = "akyuu";
 
-    static houseActors = [
-        "reimu"
-    ];
+const HOUSE_ACTORS = [
+    "reimu"
+];
 
-    static memoryActors = [
-        "reimemory"
-    ];
-}
+const MEMORY_ACTORS = [
+    "reimemory"
+];
