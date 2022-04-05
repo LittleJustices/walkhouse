@@ -10,8 +10,9 @@ var config = {
     width: CANVAS_WIDTH,
     height: CANVAS_HEIGHT,
     scene: [
-        new HouseScene({sceneTitle: "house", transitionTarget: "memory"}, HOUSE_ACTORS),
-        new HouseScene({sceneTitle: "memory", transitionTarget: "house"}, MEMORY_ACTORS),
+        new LoadScene(),
+        new HouseScene({sceneTitle: "house", transitionTarget: "memory", actorKeys: HOUSE_ACTORS}),
+        new HouseScene({sceneTitle: "memory", transitionTarget: "house", actorKeys: MEMORY_ACTORS}),
         new InputsScene(),
         new GUIScene()
     ]
