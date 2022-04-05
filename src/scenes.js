@@ -214,8 +214,27 @@ class LoadScene extends Phaser.Scene {
     }
 
     create() {
-        this.scene.transition({
-            target: "house"
+        // Create start menu text
+        var startText = this.make.text({
+            x: this.cameras.main.width / 2,
+            y: this.cameras.main.height / 2,
+            text: "Press any key to start",
+            style: {
+                font: '20px monospace',
+                fill: '#ffffff'
+            }
         })
+        startText.setOrigin(0.5, 0.5);
+
+        this.input.keyboard.on('keydown', function () {
+            startText.destroy();
+            this.startGame();
+        }, this);
     }
+
+    startGame() {
+            this.scene.transition({
+                target: "house"
+            });
+        }
 }
