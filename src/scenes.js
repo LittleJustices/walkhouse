@@ -7,8 +7,7 @@ class HouseScene extends Phaser.Scene {
         this.actorKeys = config.actorKeys;
     }
 
-    preload() {
-    }
+    preload() {    }
 
     create() {
         const backdropMap = this.make.tilemap({ key: "room-map" });
@@ -140,6 +139,12 @@ class LoadScene extends Phaser.Scene {
     }
 
     preload() {
+        // Create progress bar
+        var progressBar = this.add.graphics();
+        var progressBox = this.add.graphics();
+        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillRect(240, 270, 320, 50);
+
         this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
     
         // load tileset and map
@@ -162,6 +167,22 @@ class LoadScene extends Phaser.Scene {
             this.load.image(actorKey + "-sprite", SPRITES_PATH + actorKey + ".png");
             this.load.json(actorKey + "-data", ACTORS_PATH + actorKey + ".json");
             this.load.json(actorKey + "-lines", INTERACTIONS_PATH + actorKey + ".json");
+        });
+
+        this.load.on('progress', function (value) {
+            console.log(value);
+            progressBar.clear();
+            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillRect(250, 280, 300 * value, 30);
+        });
+                    
+        this.load.on('fileprogress', function (file) {
+            console.log(file.src);
+        });
+        this.load.on('complete', function () {
+            progressBar.destroy();
+            progressBox.destroy();
+            console.log('complete');
         });
     }
 
