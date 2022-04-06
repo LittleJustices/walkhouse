@@ -236,5 +236,6 @@ class LoadScene extends Phaser.Scene {
             this.scene.transition({
                 target: "house"
             });
+            gameState.state = GameState.explorationState;
         }
 }
