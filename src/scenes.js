@@ -177,6 +177,7 @@ class LoadScene extends Phaser.Scene {
 
         // Load player assets
         this.load.image(PLAYER_KEY + "-sprite", SPRITES_PATH + PLAYER_KEY + ".png");
+        this.load.image(PLAYER_KEY + "-portrait", PORTRAITS_PATH + PLAYER_KEY + ".png")
         this.load.json(PLAYER_KEY + "-data", ACTORS_PATH + PLAYER_KEY + ".json");
 
         // Load NPC assets

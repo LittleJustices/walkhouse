@@ -1,7 +1,7 @@
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
-const ICON_WIDTH = 32;      // Hardcoded for now, figure out how to get the width dynamically once I start playing with real assets
+const ICON_WIDTH = 64;      // Hardcoded for now, figure out how to get the width dynamically once I start playing with real assets
 const ACTION_WIDTH = 36;
 
 class DialogueBox {
@@ -64,7 +64,7 @@ class DialogueBox {
                 // background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY),
                     //.setStrokeStyle(2, COLOR_LIGHT),
     
-                icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 16, COLOR_DARK),
+                icon: scene.add.image(0, 0, "akyuu-portrait").setScale(0.25),
     
                 // text: this.getBuiltInText(scene, fixedWidth, fixedHeight),
                 text: this.getBBcodeText(scene, fixedWidth, fixedHeight),
