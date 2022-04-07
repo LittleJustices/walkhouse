@@ -7,11 +7,33 @@ const ACTION_WIDTH = 36;
 class DialogueBox {
     constructor(scene) {
         this.scene = scene;
+        var sizer = scene.rexUI.add.sizer({
+            orientation: 1,
+            anchor: {
+                left: 'left+10',
+                right: 'right-10',
+                bottom: 'bottom-10',
+            }
+        });
+        sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
+
+        sizer.add(
+            scene.make.text({x: 0, y: 0, text: 'name goes here', style: {font: '20px'}}), 
+            {
+                align: 'left',
+                padding: {left: 10, right: 10, top: 10, bottom: 10}
+            }
+            );
+
         this.textBox = this.createTextBox(this.scene, {
             fixedHeight: 65,
             outerWidth: CANVAS_WIDTH,
             padding: TEXTBOX_OFFSET,
         }).setScrollFactor(0);
+        
+        sizer.add(this.textBox);
+        sizer.layout();
+        sizer.drawBounds(scene.add.graphics(), 0xff0000);
     }
     
     createTextBox(scene, config) {
@@ -39,7 +61,7 @@ class DialogueBox {
                 width: outerWidth - 2 * padding,
                 height: outerHeight - 2 * padding,
     
-                background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY),
+                // background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY),
                     //.setStrokeStyle(2, COLOR_LIGHT),
     
                 icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 16, COLOR_DARK),
