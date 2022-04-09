@@ -1,4 +1,4 @@
-const NAME_ERROR = "Forgotten Presence (Name not defined. Please contact the developer.)";
+const NAME_ERROR = "Forgotten Presence (Error: Actor name not defined)";
 
 class Interaction {
     constructor(pool, interactionObject) {
