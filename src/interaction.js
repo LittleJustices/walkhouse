@@ -29,7 +29,7 @@ class Interaction {
         if (typeof interactionObject.name == "string") {
             this.name = interactionObject.name;
         } else {
-            this.name = NAME_ERRORS.UNDEFINED;
+            this.name = NAME_ERROR;
         }
 
         if (typeof interactionObject.words == "string") {
