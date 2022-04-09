@@ -1,13 +1,13 @@
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
-const ICON_WIDTH = 32;      // Hardcoded for now, figure out how to get the width dynamically once I start playing with real assets
+const ICON_WIDTH = 64;      // Hardcoded for now, figure out how to get the width dynamically once I start playing with real assets
 const ACTION_WIDTH = 36;
 
 class DialogueBox {
     constructor(scene) {
         this.scene = scene;
-        var sizer = scene.rexUI.add.sizer({
+        this.sizer = scene.rexUI.add.sizer({
             orientation: 1,
             anchor: {
                 left: 'left+10',
@@ -15,15 +15,11 @@ class DialogueBox {
                 bottom: 'bottom-10',
             }
         });
-        sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
+        this.sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
 
-        sizer.add(
-            scene.make.text({x: 0, y: 0, text: 'name goes here', style: {font: '20px'}}), 
-            {
-                align: 'left',
-                padding: {left: 10, right: 10, top: 10, bottom: 10}
-            }
-            );
+        this.nameField = this.createNameField(this.scene, {
+            style: {font: "20px"}
+        });
 
         this.textBox = this.createTextBox(this.scene, {
             fixedHeight: 65,
@@ -31,9 +27,17 @@ class DialogueBox {
             padding: TEXTBOX_OFFSET,
         }).setScrollFactor(0);
         
-        sizer.add(this.textBox);
-        sizer.layout();
-        sizer.drawBounds(scene.add.graphics(), 0xff0000);
+        this.sizer.add(this.nameField, {
+            align: 'left',
+            padding: {left: 20, right: 20, top: 20, bottom: 0}
+        });
+        this.sizer.add(this.textBox);
+        this.sizer.layout();
+        this.sizer.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
+    }
+
+    createNameField(scene, config) {
+        return scene.make.text(config);
     }
     
     createTextBox(scene, config) {
@@ -44,7 +48,7 @@ class DialogueBox {
         var space = {
             left: 20,
             right: 20,
-            top: 20,
+            top: 10,
             bottom: 20,
             icon: 10,
             text: 10,
@@ -64,7 +68,7 @@ class DialogueBox {
                 // background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY),
                     //.setStrokeStyle(2, COLOR_LIGHT),
     
-                icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 16, COLOR_DARK),
+                icon: scene.add.image(0, 0, "akyuu-portrait").setScale(0.25),
     
                 // text: this.getBuiltInText(scene, fixedWidth, fixedHeight),
                 text: this.getBBcodeText(scene, fixedWidth, fixedHeight),
@@ -89,9 +93,9 @@ class DialogueBox {
                 }
             }, textBox)
             .on('pageend', function () {
-                if (this.isLastPage) {
-                    return;
-                }
+                // if (this.isLastPage) {
+                //     return;
+                // }
     
                 var icon = this.getElement('action').setVisible(true);
                 this.resetChildVisibleState(icon);
@@ -136,8 +140,9 @@ class DialogueBox {
         })
     }
 
-    displayDialogue(content) {
-        this.textBox.start(content, 50);
+    displayDialogue(name, words) {
+        this.nameField.text = name;
+        this.textBox.start(words, 50);
     }
 
     nextPage() {
@@ -147,6 +152,7 @@ class DialogueBox {
             this.textBox.stop(true);
         } else {
             if (this.textBox.isLastPage) {
+                this.nameField.text = "";
                 this.textBox.text = "";
                 // refer to function that decides what to do after a piece of dialogue is over (exit or pull up next piece)
                 InteractionsHandler.handleEndOfInteraction();

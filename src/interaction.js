@@ -1,3 +1,5 @@
+const NAME_ERROR = "Forgotten Presence (Error: Actor name not defined)";
+
 class Interaction {
     constructor(pool, interactionObject) {
         this.pool = pool;
@@ -22,6 +24,12 @@ class Interaction {
             this.unconditions = [interactionObject.unconditions];   // If the conditions are a single string (forgot the brackets), make an array
         } else {
             this.unconditions = [];   // If the conditions are undefined or null (or anything other than an array or a string), treat as an empty array
+        }
+
+        if (typeof interactionObject.name == "string") {
+            this.name = interactionObject.name;
+        } else {
+            this.name = NAME_ERROR;
         }
 
         if (typeof interactionObject.words == "string") {
@@ -55,7 +63,7 @@ class Interaction {
         return followups;
     }
 
-    findFollowupInteraction(){
+    findFollowupInteraction() {
         return this.pool.findFirstLegalInteraction(this.followups)
     }
 }

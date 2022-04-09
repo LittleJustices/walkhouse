@@ -5,7 +5,8 @@ const MSG_ERRORS = {
 }
 
 class InteractionPool {
-    constructor(interactionsData) {
+    constructor(actor, interactionsData) {
+        this.actor = actor;
         if (!interactionsData) {
             // For null or undefined data, make a fallback with an error message
             interactionsData = {
