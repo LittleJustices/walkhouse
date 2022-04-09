@@ -17,7 +17,7 @@ class DialogueBox {
         });
         this.sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
 
-        this.nameField = scene.make.text({x: 0, y: 0, text: 'name goes here', style: {font: '20px'}});
+        this.nameField = scene.make.text({x: 0, y: 0, text: "", style: {font: "20px"}});
 
         this.textBox = this.createTextBox(this.scene, {
             fixedHeight: 65,
