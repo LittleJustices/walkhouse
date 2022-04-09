@@ -134,8 +134,9 @@ class DialogueBox {
         })
     }
 
-    displayDialogue(content) {
-        this.textBox.start(content, 50);
+    displayDialogue(name, words) {
+        this.nameField.text = name;
+        this.textBox.start(words, 50);
     }
 
     nextPage() {
