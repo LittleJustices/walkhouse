@@ -5,7 +5,7 @@ class Entity {
         this.tilePos = new Phaser.Math.Vector2(entityData.initialPosition);
         this.scene = scene;
         this.isPlayer = entityData.isPlayer;
-        this.interactionPool = new InteractionPool(interactionData);
+        this.interactionPool = new InteractionPool(this, interactionData);
 
         const offsetX = TILE_SIZE / 2;
         const offsetY = TILE_SIZE;
