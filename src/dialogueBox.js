@@ -7,7 +7,7 @@ const ACTION_WIDTH = 36;
 class DialogueBox {
     constructor(scene) {
         this.scene = scene;
-        var sizer = scene.rexUI.add.sizer({
+        this.sizer = scene.rexUI.add.sizer({
             orientation: 1,
             anchor: {
                 left: 'left+10',
@@ -15,9 +15,9 @@ class DialogueBox {
                 bottom: 'bottom-10',
             }
         });
-        sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
+        this.sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
 
-        sizer.add(
+        this.nameField = this.sizer.add(
             scene.make.text({x: 0, y: 0, text: 'name goes here', style: {font: '20px'}}), 
             {
                 align: 'left',
@@ -31,9 +31,9 @@ class DialogueBox {
             padding: TEXTBOX_OFFSET,
         }).setScrollFactor(0);
         
-        sizer.add(this.textBox);
-        sizer.layout();
-        sizer.drawBounds(scene.add.graphics(), 0xff0000);
+        this.sizer.add(this.textBox);
+        this.sizer.layout();
+        this.sizer.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
     }
     
     createTextBox(scene, config) {
@@ -89,9 +89,9 @@ class DialogueBox {
                 }
             }, textBox)
             .on('pageend', function () {
-                if (this.isLastPage) {
-                    return;
-                }
+                // if (this.isLastPage) {
+                //     return;
+                // }
     
                 var icon = this.getElement('action').setVisible(true);
                 this.resetChildVisibleState(icon);
