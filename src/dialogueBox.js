@@ -17,7 +17,9 @@ class DialogueBox {
         });
         this.sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
 
-        this.nameField = scene.make.text({x: 0, y: 0, text: "", style: {font: "20px"}});
+        this.nameField = this.createNameField(this.scene, {
+            style: {font: "20px"}
+        });
 
         this.textBox = this.createTextBox(this.scene, {
             fixedHeight: 65,
@@ -27,11 +29,15 @@ class DialogueBox {
         
         this.sizer.add(this.nameField, {
             align: 'left',
-            padding: {left: 10, right: 10, top: 10, bottom: 10}
+            padding: {left: 20, right: 20, top: 20, bottom: 0}
         });
         this.sizer.add(this.textBox);
         this.sizer.layout();
         this.sizer.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
+    }
+
+    createNameField(scene, config) {
+        return scene.make.text(config);
     }
     
     createTextBox(scene, config) {
@@ -42,7 +48,7 @@ class DialogueBox {
         var space = {
             left: 20,
             right: 20,
-            top: 20,
+            top: 10,
             bottom: 20,
             icon: 10,
             text: 10,
