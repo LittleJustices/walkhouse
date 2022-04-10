@@ -15,3 +15,8 @@ const HOUSE_ACTORS = [
 const MEMORY_ACTORS = [
     "reimemory"
 ];
+
+const PORTRAITS = [
+    "akyuu",
+    "reimu"
+];
