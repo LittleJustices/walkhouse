@@ -33,7 +33,7 @@ class Interaction {
         }
 
         if (typeof interactionObject.portrait == "string") {
-            this.portrait = interactionObject.portrait;
+            this.portrait = interactionObject.portrait + "-portrait";
         } else {
             this.portrait = "";
         }
