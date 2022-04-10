@@ -160,8 +160,9 @@ class DialogueBox {
         })
     }
 
-    displayDialogue(name, words) {
+    displayDialogue(name, portrait, words) {
         this.nameField.text = name;
+        this.portrait.setTexture(portrait);
         this.textBox.start(words, 50);
     }
 
