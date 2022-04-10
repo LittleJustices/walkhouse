@@ -194,6 +194,12 @@ class LoadScene extends Phaser.Scene {
             this.load.json(actorKey + "-lines", INTERACTIONS_PATH + actorKey + ".json");
         });
 
+        // Load portrait assets
+        this.load.image("empty-portrait", PORTRAITS_PATH + "empty.png");
+        PORTRAITS.forEach(portraitKey => {
+            this.load.image(portraitKey + "-portrait", PORTRAITS_PATH + portraitKey + ".png");
+        });
+
         this.load.on('progress', function (value) {
             console.log(value);
             progressBar.clear();
