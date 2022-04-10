@@ -32,6 +32,12 @@ class Interaction {
             this.name = NAME_ERROR;
         }
 
+        if (typeof interactionObject.portrait == "string") {
+            this.portrait = interactionObject.portrait;
+        } else {
+            this.portrait = "";
+        }
+
         if (typeof interactionObject.words == "string") {
             this.words = interactionObject.words;
         } else {
