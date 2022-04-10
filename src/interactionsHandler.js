@@ -6,10 +6,11 @@ class InteractionsHandler {
         this._currentInteraction = interactionPool.findNextInteraction();
         // Get name and words
         var name = this._currentInteraction.name;
+        var portrait = this._currentInteraction.portrait;
         var words = this._currentInteraction.words;
         // Handle anything that needs to be done before the interaction, e.g. event, setting name and portrait, etc.
         // Send the message to the dialogue box to be displayed
-        dialogueBox.displayDialogue(name, words);
+        dialogueBox.displayDialogue(name, portrait, words);
     }
 
     // Called by the dialogue box when player presses forward on the last page of an interaction
@@ -33,7 +34,7 @@ class InteractionsHandler {
         } else {
             // If a followup is found, make that the current interaction and send it to the dialogue box to be displayed
             this._currentInteraction = followupInteraction;
-            dialogueBox.displayDialogue(this._currentInteraction.name, this._currentInteraction.words);
+            dialogueBox.displayDialogue(this._currentInteraction.name, this._currentInteraction.portrait, this._currentInteraction.words);
         }
     }
 }
