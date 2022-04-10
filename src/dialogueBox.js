@@ -3,6 +3,8 @@ const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
 const ICON_WIDTH = 64;      // Hardcoded for now, figure out how to get the width dynamically once I start playing with real assets
 const ACTION_WIDTH = 36;
+const HORIZONTAL_PADDING = { left: 20, portraitText: 10, textAction: 10, right: 20 };
+const VERTICAL_PADDING = { top: 20, nameText: 10, bottom: 20 };
 
 class DialogueBox {
     constructor(scene) {
@@ -10,16 +12,21 @@ class DialogueBox {
         this.sizer = scene.rexUI.add.sizer({
             orientation: 1,
             anchor: {
-                left: 'left+10',
-                right: 'right-10',
-                bottom: 'bottom-10',
+                left: "left+" + TEXTBOX_OFFSET.toString(),
+                right: "right-" + TEXTBOX_OFFSET.toString(),
+                bottom: "bottom-" + TEXTBOX_OFFSET.toString(),
+                width: "100%-" + (TEXTBOX_OFFSET * 2).toString()
             }
         });
         this.sizer.addBackground(scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY));
 
+        var subsizer = scene.rexUI.add.sizer({orientation: 0});
+
         this.nameField = this.createNameField(this.scene, {
             style: {font: "20px"}
         });
+
+        this.portrait = this.scene.add.image(0, 0, "akyuu-portrait").setScale(0.25);
 
         this.textBox = this.createTextBox(this.scene, {
             fixedHeight: 65,
@@ -28,10 +35,33 @@ class DialogueBox {
         }).setScrollFactor(0);
         
         this.sizer.add(this.nameField, {
-            align: 'left',
-            padding: {left: 20, right: 20, top: 20, bottom: 0}
+            align: "left",
+            padding: {
+                left: HORIZONTAL_PADDING.left, 
+                right: HORIZONTAL_PADDING.right, 
+                top: VERTICAL_PADDING.top, 
+                bottom: VERTICAL_PADDING.nameText
+            }
         });
-        this.sizer.add(this.textBox);
+        this.sizer.add(subsizer);
+        subsizer.add(this.portrait, {
+            align: "center",
+            padding: {
+                left: HORIZONTAL_PADDING.left,
+                right: HORIZONTAL_PADDING.portraitText,
+                top: 0,
+                bottom: VERTICAL_PADDING.bottom
+            }
+        });
+        subsizer.add(this.textBox, {
+            align: "left",
+            padding: {
+                left: 0,
+                right: HORIZONTAL_PADDING.right,
+                top: 0,
+                bottom: VERTICAL_PADDING.bottom
+            }
+        });
         this.sizer.layout();
         this.sizer.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
     }
@@ -42,18 +72,9 @@ class DialogueBox {
     
     createTextBox(scene, config) {
         var fixedHeight = GetValue(config, 'fixedHeight', 0);
-        var outerWidth = GetValue(config, 'outerWidth', 0);
-        var outerHeight = GetValue(config, 'outerHeight', 0);
-        var padding = GetValue(config, 'padding', 0);
-        var space = {
-            left: 20,
-            right: 20,
-            top: 10,
-            bottom: 20,
-            icon: 10,
-            text: 10,
-        }
-        var fixedWidth = outerWidth - 2 * padding - space.left - space.right - space.icon - space.text - ICON_WIDTH - ACTION_WIDTH;
+        var space = { text: HORIZONTAL_PADDING.textAction }
+        var fixedWidth = CANVAS_WIDTH - 2 * TEXTBOX_OFFSET - HORIZONTAL_PADDING.left - ICON_WIDTH - HORIZONTAL_PADDING.portraitText - 
+            HORIZONTAL_PADDING.textAction - ACTION_WIDTH - HORIZONTAL_PADDING.right;
         var textBox = scene.rexUI.add.textBox({
                 // x: x,
                 // y: y,
@@ -62,13 +83,12 @@ class DialogueBox {
                     right: 'right-10',
                     bottom: 'bottom-10',
                 },
-                width: outerWidth - 2 * padding,
-                height: outerHeight - 2 * padding,
+                // width: CANVAS_WIDTH - 2 * TEXTBOX_OFFSET,
     
                 // background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY),
                     //.setStrokeStyle(2, COLOR_LIGHT),
     
-                icon: scene.add.image(0, 0, "akyuu-portrait").setScale(0.25),
+                // icon: scene.add.image(0, 0, "akyuu-portrait").setScale(0.25),
     
                 // text: this.getBuiltInText(scene, fixedWidth, fixedHeight),
                 text: this.getBBcodeText(scene, fixedWidth, fixedHeight),
