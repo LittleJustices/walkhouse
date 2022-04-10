@@ -26,7 +26,7 @@ class DialogueBox {
             style: {font: "20px"}
         });
 
-        this.portrait = this.scene.add.image(0, 0, "akyuu-portrait").setScale(0.25);
+        this.portrait = this.scene.add.image(0, 0, "empty-portrait").setScale(0.25);
 
         this.textBox = this.createTextBox(this.scene, {
             fixedHeight: 65,
@@ -174,6 +174,7 @@ class DialogueBox {
         } else {
             if (this.textBox.isLastPage) {
                 this.nameField.text = "";
+                this.portrait.setTexture("empty-portrait");
                 this.textBox.text = "";
                 // refer to function that decides what to do after a piece of dialogue is over (exit or pull up next piece)
                 InteractionsHandler.handleEndOfInteraction();

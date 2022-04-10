@@ -195,6 +195,7 @@ class LoadScene extends Phaser.Scene {
         });
 
         // Load portrait assets
+        this.load.image("empty-portrait", PORTRAITS_PATH + "empty.png");
         PORTRAITS.forEach(portraitKey => {
             this.load.image(portraitKey + "-portrait", PORTRAITS_PATH + portraitKey + ".png");
         });

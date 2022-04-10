@@ -35,7 +35,7 @@ class Interaction {
         if (typeof interactionObject.portrait == "string") {
             this.portrait = interactionObject.portrait + "-portrait";
         } else {
-            this.portrait = "";
+            this.portrait = "empty-portrait";
         }
 
         if (typeof interactionObject.words == "string") {
