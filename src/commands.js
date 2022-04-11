@@ -45,6 +45,18 @@ class Commands {
         }
     }
 
+    static openMenuCommand() {
+        return function() {
+            gameState.state = GameState.menuState;
+        }
+    }
+
+    static closeMenuCommand() {
+        return function() {
+            gameState.state = GameState.explorationState;
+        }
+    }
+
     static nullCommand() {
         return function() {
             return;
