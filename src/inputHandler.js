@@ -20,6 +20,7 @@ class InputHandler {
             "d":                keyCodes.D,
             "shift":            keyCodes.SHIFT,
             "space":            keyCodes.SPACE,
+            "esc":              keyCodes.ESC,
             "arrowUp":          keyCodes.UP,
             "arrowRight":       keyCodes.RIGHT,
             "arrowDown":        keyCodes.DOWN,
@@ -44,6 +45,7 @@ class InputHandler {
         else if (this.keys.d.isDown)                return gameState.state.wasdInputs.d;
         else if (this.keys.space.isDown)            return gameState.state.wasdInputs.space;
         else if (this.keys.shift.isDown)            return gameState.state.wasdInputs.shift;
+        else if (this.keys.esc.isDown)              return gameState.state.wasdInputs.esc;
         else if (this.keys.arrowUp.isDown)          return gameState.state.arrowInputs.arrowUp;
         else if (this.keys.arrowRight.isDown)       return gameState.state.arrowInputs.arrowRight;
         else if (this.keys.arrowDown.isDown)        return gameState.state.arrowInputs.arrowDown;
