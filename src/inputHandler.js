@@ -38,14 +38,14 @@ class InputHandler {
         else if (this.keys.numBottomLeft.isDown)    return gameState.state.numpadInputs.numBottomLeft;
         else if (this.keys.numLeft.isDown)          return gameState.state.numpadInputs.numLeft;
         else if (this.keys.numTopLeft.isDown)       return gameState.state.numpadInputs.numTopLeft;
-        else if (this.keys.numZero.isDown)          return gameState.state.numpadInputs.numZero;
-        else if (this.keys.enter.isDown)            return gameState.state.numpadInputs.enter;
+        else if (JustDown(this.keys.numZero))       return gameState.state.numpadInputs.numZero;
+        else if (JustDown(this.keys.enter))         return gameState.state.numpadInputs.enter;
         else if (this.keys.w.isDown)                return gameState.state.wasdInputs.w;
         else if (this.keys.a.isDown)                return gameState.state.wasdInputs.a;
         else if (this.keys.s.isDown)                return gameState.state.wasdInputs.s;
         else if (this.keys.d.isDown)                return gameState.state.wasdInputs.d;
-        else if (this.keys.space.isDown)            return gameState.state.wasdInputs.space;
-        else if (this.keys.shift.isDown)            return gameState.state.wasdInputs.shift;
+        else if (JustDown(this.keys.space))         return gameState.state.wasdInputs.space;
+        else if (JustDown(this.keys.shift))         return gameState.state.wasdInputs.shift;
         else if (JustDown(this.keys.esc))           return gameState.state.wasdInputs.esc;
         else if (this.keys.arrowUp.isDown)          return gameState.state.arrowInputs.arrowUp;
         else if (this.keys.arrowRight.isDown)       return gameState.state.arrowInputs.arrowRight;
