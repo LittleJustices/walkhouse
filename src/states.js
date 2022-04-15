@@ -89,7 +89,7 @@ class InteractionState extends State {
     // What NPCs are involved in a given interaction is probably contained in the interaction JSON data
 
     update(scene, command) {
-        let textBox = dialogueBox;
+        let textBox = scene.scene.get("gui-scene").dialogueBox;
         if (command && !this.inputLastFrame) {
             command(textBox);
             this.inputLastFrame = true;

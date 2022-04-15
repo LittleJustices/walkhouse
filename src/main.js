@@ -25,4 +25,3 @@ var config = {
 var game = new Phaser.Game(config);
 const gameState = new GameState(GameState.titleState);
 const inputHandler = new InputHandler();
-var dialogueBox;
