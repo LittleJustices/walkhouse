@@ -1,7 +1,11 @@
 class InteractionsHandler {
-    static _currentInteraction = {};
+    constructor(scene) {
+        this.scene = scene;
+    }
 
-    static handleInteraction(interactionPool) {
+    _currentInteraction = {};
+
+    handleInteraction(interactionPool) {
         // Call into the pool to provide the interaction to handle
         this._currentInteraction = interactionPool.findNextInteraction();
         // Get name and words
@@ -14,7 +18,7 @@ class InteractionsHandler {
     }
 
     // Called by the dialogue box when player presses forward on the last page of an interaction
-    static handleEndOfInteraction() {
+    handleEndOfInteraction() {
         // Handle anything that's supposed to happen after the interaction but before the next
 
         // Set the interaction to already viewed, but don't bother if it doesn't have a value for that already

@@ -177,7 +177,7 @@ class DialogueBox {
                 this.portrait.setTexture("empty-portrait");
                 this.textBox.text = "";
                 // refer to function that decides what to do after a piece of dialogue is over (exit or pull up next piece)
-                InteractionsHandler.handleEndOfInteraction();
+                this.scene.interactionsHandler.handleEndOfInteraction();
             } else {
                 this.textBox.typeNextPage();
             }
