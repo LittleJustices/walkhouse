@@ -10,12 +10,13 @@ class ExplorationState extends State {
     constructor() {
         super({
             wasdInputs: {
-                w: Commands.moveActorCommand(DIRECTION.UP),
-                a: Commands.moveActorCommand(DIRECTION.LEFT),
-                s: Commands.moveActorCommand(DIRECTION.DOWN),
-                d: Commands.moveActorCommand(DIRECTION.RIGHT),
-                shift: Commands.nullCommand(),
-                space: Commands.nullCommand(),
+                w:      Commands.moveActorCommand(DIRECTION.UP),
+                a:      Commands.moveActorCommand(DIRECTION.LEFT),
+                s:      Commands.moveActorCommand(DIRECTION.DOWN),
+                d:      Commands.moveActorCommand(DIRECTION.RIGHT),
+                shift:  Commands.nullCommand(),
+                space:  Commands.nullCommand(),
+                esc:    Commands.openMenuCommand(),
             },
             numpadInputs: {
                 numUp:          Commands.moveActorCommand(DIRECTION.UP),
@@ -56,6 +57,7 @@ class InteractionState extends State {
                 d:      Commands.nextPageCommand(),
                 shift:  Commands.nullCommand(),
                 space:  Commands.nextPageCommand(),
+                esc:    Commands.nullCommand(),
             },
             numpadInputs: {
                 numUp:          Commands.previousPageCommand(),
@@ -87,7 +89,7 @@ class InteractionState extends State {
     // What NPCs are involved in a given interaction is probably contained in the interaction JSON data
 
     update(scene, command) {
-        let textBox = dialogueBox;
+        let textBox = scene.scene.get("gui-scene").dialogueBox;
         if (command && !this.inputLastFrame) {
             command(textBox);
             this.inputLastFrame = true;
@@ -107,6 +109,7 @@ class MenuState extends State {
                 d:      Commands.nullCommand(),
                 shift:  Commands.nullCommand(),
                 space:  Commands.nullCommand(),
+                esc:    Commands.closeMenuCommand(),
             },
             numpadInputs: {
                 numUp:          Commands.nullCommand(),
@@ -129,8 +132,10 @@ class MenuState extends State {
         });
     }
 
-    update() {
-        
+    update(scene, command) {
+        if (command) {
+            command();
+        }
     }
 }
 
@@ -144,6 +149,7 @@ class TitleState extends State {
                 d:      Commands.nullCommand(),
                 shift:  Commands.nullCommand(),
                 space:  Commands.nullCommand(),
+                esc:    Commands.nullCommand(),
             },
             numpadInputs: {
                 numUp:          Commands.nullCommand(),
