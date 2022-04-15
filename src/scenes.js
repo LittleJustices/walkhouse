@@ -128,6 +128,7 @@ class GUIScene extends Phaser.Scene {
     create() {
         this.dialogueBox = new DialogueBox(this);
         this.interactionsHandler = new InteractionsHandler(this);
+        this.menu = new Menu(this);
     }
 }
 
