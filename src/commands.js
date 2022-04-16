@@ -32,11 +32,13 @@ class Commands {
     static openMenuCommand() {
         return function() {
             gameState.state = GameState.menuState;
+            gameState.state.menu.showMenu();
         }
     }
 
     static closeMenuCommand() {
         return function() {
+            gameState.state.menu.hideMenu();
             gameState.state = GameState.explorationState;
         }
     }

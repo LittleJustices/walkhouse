@@ -14,11 +14,20 @@ class Menu {
 
         this.mainPanel.layout();
         this.mainPanel.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
+        this.mainPanel.hide();
     }
 
     createMainPanel(scene, config) {
         var mainPanel = scene.rexUI.add.sizer(config);
 
         return mainPanel;
+    }
+
+    showMenu() {
+        this.mainPanel.show();
+    }
+
+    hideMenu() {
+        this.mainPanel.hide();
     }
 }
