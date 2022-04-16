@@ -2,6 +2,8 @@ class Menu {
     constructor(scene) {
         this.scene = scene;
 
+        this.parentContainer = this.scene.rexUI.add.sizer({});
+
         this.mainPanel = this.createMainPanel(this.scene, {
             height: 50,
             anchor: {
@@ -12,6 +14,9 @@ class Menu {
             }
         });
 
+        this.parentContainer.add(this.mainPanel);
+
+        this.mainPanel.addBackground(this.scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY))
         this.mainPanel.layout();
         this.mainPanel.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
         this.mainPanel.hide();
