@@ -14,9 +14,13 @@ class Menu {
             }
         });
 
+        this.pages = this.createPages(this.scene, {});
+
         this.parentContainer.add(this.mainPanel);
 
-        this.mainPanel.addBackground(this.scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY))
+        this.mainPanel.add(this.pages);
+
+        // this.mainPanel.addBackground(this.scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY))
         this.mainPanel.layout();
         this.mainPanel.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
         this.mainPanel.hide();
@@ -26,6 +30,13 @@ class Menu {
         var mainPanel = scene.rexUI.add.sizer(config);
 
         return mainPanel;
+    }
+
+    createPages(scene, config) {
+        var pages = scene.rexUI.add.pages(config);
+        pages.addBackground(scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY));
+
+        return pages;
     }
 
     showMenu() {
