@@ -18,7 +18,7 @@ class Menu {
 
         this.parentContainer.add(this.mainPanel);
 
-        this.mainPanel.add(this.pages);
+        this.mainPanel.add(this.pages, {align: "center"});
 
         // this.mainPanel.addBackground(this.scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY))
         this.mainPanel.layout();
@@ -35,6 +35,7 @@ class Menu {
     createPages(scene, config) {
         var pages = scene.rexUI.add.pages(config);
         pages.addBackground(scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY));
+        pages.addPage(scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_LIGHT), "page");
 
         return pages;
     }
