@@ -35,7 +35,8 @@ class Menu {
     createPages(scene, config) {
         var pages = scene.rexUI.add.pages(config);
         pages.addBackground(scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY));
-        pages.addPage(scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_LIGHT), "page");
+        pages.addPage(scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_LIGHT), "settings");
+        pages.addPage(scene.rexUI.add.roundRectangle(10, 10, 20, 20, 0, COLOR_LIGHT), "credits");
 
         return pages;
     }
@@ -45,6 +46,7 @@ class Menu {
     }
 
     hideMenu() {
+        this.pages.swapPage("credits");
         this.mainPanel.hide();
     }
 }
