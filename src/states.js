@@ -130,6 +130,8 @@ class MenuState extends State {
                 arrowLeft:  Commands.nullCommand(),
             }
         });
+
+        this.menu = null;
     }
 
     update(scene, command) {
