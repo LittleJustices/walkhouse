@@ -27,9 +27,32 @@ class Menu {
     }
 
     createMainPanel(scene, config) {
+        var keys = ['DTable', 'Text', 'STable'];
+        var buttons = this.createButtons(scene, keys);
         var mainPanel = scene.rexUI.add.sizer(config);
+        mainPanel.add(buttons, 0, "top", 0, false);
 
         return mainPanel;
+    }
+
+    createButtons(scene, keys) {
+        var buttons = [];
+        for (let i = 0; i < keys.length; i++) {
+            buttons.push(scene.rexUI.add.label({
+                background: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_DARK),
+                text: scene.add.text(0, 0, keys[i], { fontSize: "18pt" }),
+                space: {
+                    top: 5,
+                    left: 10,
+                    right: 10,
+                    bottom: 2,
+                }
+            }));
+        }
+        return scene.rexUI.add.buttons({
+            buttons: buttons,
+            orientation: "y"
+        });
     }
 
     createPages(scene, config) {
