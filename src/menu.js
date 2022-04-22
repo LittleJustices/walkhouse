@@ -21,7 +21,18 @@ class Menu {
         // this.mainPanel.addBackground(this.scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY))
         this.mainPanel.layout();
         // this.mainPanel.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
-        this.mainPanel.hide();
+        // this.mainPanel.hide();
+
+
+        this.mainPanel.getElement('pages')
+            .on('pageinvisible', function (page, key, pages) {
+                console.log('Set page \'' + key + '\' invisible');
+            })
+            .on('pagevisible', function (page, key, pages) {
+                console.log('Set page \'' + key + '\' visible');
+            });
+
+        this.mainPanel.getElement('buttons').emitButtonClick(0);
     }
 
     createMainPanel(scene, config) {
@@ -31,6 +42,20 @@ class Menu {
         var mainPanel = scene.rexUI.add.sizer(config);
         mainPanel.add(buttons, 0, "top", 0, false);
         mainPanel.add(pages, 1, "center", 0, true);
+
+        var prevButton = undefined;
+        buttons.on('button.click', function (button) {
+            if (button === prevButton) {
+                return;
+            }
+            button.getElement('background').setFillStyle(COLOR_PRIMARY);
+            if (prevButton) {
+                prevButton.getElement('background').setFillStyle(COLOR_DARK);
+            }
+            prevButton = button;
+    
+            pages.swapPage(button.text);
+        });
 
         mainPanel.addChildrenMap("buttons", buttons);
         mainPanel.addChildrenMap("pages", pages);
