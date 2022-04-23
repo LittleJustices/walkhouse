@@ -90,7 +90,6 @@ class Menu {
         pages.addBackground(scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY));
 
         var createPageCallback = {
-            DTable: this.createDTablePage,
             Text: this.createTextPage,
             STable: this.createSTablePage,
         }
@@ -103,61 +102,6 @@ class Menu {
         }
 
         return pages;
-    }
-
-    createDTablePage(scene) {
-        var getItems = function(count) {
-            var data = [];
-            for (let i = 0; i < count; i++) {
-                data.push({
-                    id: i,
-                    color: Phaser.Math.Between(0, 0xffffff),
-                })
-            }
-            return data;
-        }
-
-        return scene.rexUI.add.gridTable({
-            table: {
-                callHeight: 60,
-                columns: 2,
-                mask: {
-                    padding: 2,
-                },
-            },
-
-            slider: {
-                track: scene.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_DARK),
-                thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 13, COLOR_LIGHT),
-            },
-
-            space: {
-                table: 10,
-            },
-
-            createCellContainerCallback: function (cell) {
-                var scene = cell.scene,
-                    width = cell.width,
-                    height = cell.height,
-                    item = cell.item,
-                    index = cell.index;
-                return scene.rexUI.add.label({
-                    width: width,
-                    height: height,
-    
-                    background: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 0).setStrokeStyle(2, COLOR_LIGHT),
-                    icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, item.color),
-                    text: scene.add.text(0, 0, item.id),
-    
-                    space: {
-                        icon: 10,
-                        left: 15
-                    }
-                })
-                    .setOrigin(0);
-            },
-            items: getItems(100)
-        })
     }
 
     createTextPage(scene) {
