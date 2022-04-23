@@ -20,8 +20,8 @@ class Menu {
 
         // this.mainPanel.addBackground(this.scene.rexUI.add.roundRectangle(0, 0, 10, 10, 0, COLOR_PRIMARY))
         this.mainPanel.layout();
-        // this.mainPanel.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
-        // this.mainPanel.hide();
+        this.mainPanel.drawBounds(scene.add.graphics(), 0xff0000);   // Comment out to get rid of sizer outline
+        this.mainPanel.hide();
 
 
         this.mainPanel.getElement('pages')
@@ -36,7 +36,7 @@ class Menu {
     }
 
     createMainPanel(scene, config) {
-        var keys = ['DTable', 'Text', 'STable'];
+        var keys = ['Text', 'STable'];
         var buttons = this.createButtons(scene, keys);
         var pages = this.createPages(scene, keys);
         var mainPanel = scene.rexUI.add.sizer(config);
