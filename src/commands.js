@@ -43,6 +43,18 @@ class Commands {
         }
     }
 
+    static menuPageUpCommand() {
+        return function(menu) {
+            menu.menuPageUp();
+        }
+    }
+
+    static menuPageDownCommand() {
+        return function(menu) {
+            menu.menuPageDown();
+        }
+    }
+
     static nullCommand() {
         return function() {
             return;

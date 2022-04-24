@@ -214,4 +214,20 @@ class Menu {
     hideMenu() {
         this.mainPanel.hide();
     }
+
+    menuPageUp() {
+        const pages = this.mainPanel.getElement("pages");
+        const currentPageIndex = pages.keys.indexOf(pages.currentKey);
+        if (currentPageIndex > 0) {
+            pages.swapPage(pages.keys[currentPageIndex - 1]);
+        }
+    }
+
+    menuPageDown() {
+        const pages = this.mainPanel.getElement("pages");
+        const currentPageIndex = pages.keys.indexOf(pages.currentKey);
+        if (currentPageIndex < pages.keys.length - 1) {
+            pages.swapPage(pages.keys[currentPageIndex + 1]);
+        }
+    }
 }

@@ -124,9 +124,9 @@ class MenuState extends State {
                 enter:          Commands.nullCommand(),
             },
             arrowInputs: {
-                arrowUp:    Commands.nullCommand(),
+                arrowUp:    Commands.menuPageUpCommand(),
                 arrowRight: Commands.nullCommand(),
-                arrowDown:  Commands.nullCommand(),
+                arrowDown:  Commands.menuPageDownCommand(),
                 arrowLeft:  Commands.nullCommand(),
             }
         });
@@ -135,8 +135,9 @@ class MenuState extends State {
     }
 
     update(scene, command) {
+        // Block multiple inputs when swapping pages
         if (command) {
-            command();
+            command(this.menu); // Change commands so that scene update can just pass in the scene and the state/command gets the menu from it
         }
     }
 }
